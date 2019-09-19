@@ -41,6 +41,7 @@ class FormatUtils {
     return completer.future;
   }
 
+
   static Future<Size> getSize(File file) async {
     if(await isJpg(file)){
       return JpegDecoder(file).size;
