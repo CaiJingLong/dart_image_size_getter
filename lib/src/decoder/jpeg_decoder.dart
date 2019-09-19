@@ -15,7 +15,12 @@ class JpegDecoder {
     final stream = file.openRead();
     StreamSubscription sub;
 
+    final total = file.lengthSync();
+    var currentPos = 0;
+
     sub = stream.listen((data) {
+      print(currentPos);
+      currentPos += data.length;
       var startIndex = 0;
       while (startIndex < data.length) {
         final current = data.indexOf(0xFF, startIndex);
@@ -33,14 +38,14 @@ class JpegDecoder {
           continue;
         }
 
+        printRange(data, current, current + 9);
+
         int width = getIntFromRange(data, current + 5, current + 7);
         int height = getIntFromRange(data, current + 7, current + 9);
         completer.reply(Size(width, height));
         sub.cancel();
         return;
       }
-      completer.reply(Size.zero);
-      sub.cancel();
     });
 
     return completer.future;
@@ -53,5 +58,10 @@ class JpegDecoder {
       sb.write(i.toRadixString(16).padLeft(2, '0'));
     }
     return int.tryParse(sb.toString(), radix: 16);
+  }
+
+  void printRange(List<int> list, int start, int end) {
+    final range = list.getRange(start, end).toList();
+    print(range);
   }
 }

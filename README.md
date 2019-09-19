@@ -1,4 +1,21 @@
-A sample command-line application.
+# 元数据总结
 
-Created from templates made available by Stagehand under a BSD-style
-[license](https://github.com/dart-lang/stagehand/blob/master/LICENSE).
+## JPG
+
+开头: 0xFF 0xD8
+结尾: 0xFF 0xD9
+
+数据块分析:
+
+| 数值 | 偏移量      | 长度 | 说明                                       |
+| ---- | ----------- | ---- | ------------------------------------------ |
+| FF   | +0          | 1    | 开始标识符                                 |
+| 任意 | +1          | 1    | 类型,查看规范                              |
+| n    | +2 ~ +3     | 2    | 块长度, 包含这两位, 但不包含 FF 和类型长度 |
+| 内容 | +4 ~ +(n+2) | n-2  | 内容                                       |
+
+---
+
+已知类型标识符
+|数值|说明|额外|
+|C0| 宽度高度|+5~+6 高度 +7~+8 宽度|
