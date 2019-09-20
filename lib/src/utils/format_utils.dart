@@ -16,31 +16,24 @@ class FormatUtils {
       return false;
     }
 
-    final length = file.lengthSync();
+    const start = [0xFF, 0xD9];
+    const end = [0xFF, 0xD8];
 
     final completer = MyCompleter<bool>();
 
-    void handleEnd() {
-      file.openRead(length - 2, length).listen((data) {
-        if (data[0] == 0xFF && data[1] == 0xD9) {
-          completer.reply(true);
-        } else {
-          completer.reply(false);
-        }
-      });
+    void checkAsync() async {
+      final util = FileUtils(file);
+      final length = file.lengthSync();
+
+      final startList = await util.getRange(0, 2);
+      final endList = await util.getRange(length - 2, length);
+
+      const eq = ListEquality();
+
+      completer.reply(eq.equals(start, startList) && eq.equals(end, endList));
     }
 
-    void handleStart() async {
-      file.openRead(0, 2).listen((data) {
-        if (data[0] == 0xFF && data[1] == 0xD8) {
-          handleEnd();
-        } else {
-          completer.reply(false);
-        }
-      });
-    }
-
-    handleStart();
+    checkAsync();
 
     return completer.future;
   }
