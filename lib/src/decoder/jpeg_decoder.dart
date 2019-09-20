@@ -2,51 +2,47 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:image_size_getter/src/core/size.dart';
+import 'package:image_size_getter/src/entity/block_entity.dart';
+import 'package:image_size_getter/src/utils/file_utils.dart';
 
 import '../core/completer.dart';
+import 'decoder.dart';
 
-class JpegDecoder {
+class JpegDecoder extends ImageDecoder {
   final File file;
+  final FileUtils fileUtils;
 
-  JpegDecoder(this.file);
+  JpegDecoder(this.file) : fileUtils = FileUtils(file);
 
-  Future<Size> get size {
+  @override
+  Future<Size> get size async {
     final completer = MyCompleter<Size>();
-    final stream = file.openRead();
-    StreamSubscription sub;
 
-    final total = file.lengthSync();
-    var currentPos = 0;
+    void getSizeAsync() async {
+      int start = 2;
+      BlockEntity block;
 
-    sub = stream.listen((data) {
-      print(currentPos);
-      currentPos += data.length;
-      var startIndex = 0;
-      while (startIndex < data.length) {
-        final current = data.indexOf(0xFF, startIndex);
-        if (current == -1) {
-          return;
-        }
-        if (current == data.length - 1) {
-          return;
+      while (true) {
+        block = await getBlockInfo(start);
+        if (block == null) {
+          completer.reply(Size(-1, -1));
+          break;
         }
 
-        final next = data[current + 1];
-
-        if (next != 0xC0) {
-          startIndex = current + 1;
-          continue;
+        if (block.type == 0xC0) {
+          final widthList = await fileUtils.readRange(start + 7, start + 9);
+          final heightList = await fileUtils.readRange(start + 5, start + 7);
+          final width = convertRadix16ToInt(widthList);
+          final height = convertRadix16ToInt(heightList);
+          completer.reply(Size(width, height));
+          break;
+        } else {
+          start += block.length;
         }
-
-        printRange(data, current, current + 9);
-
-        int width = getIntFromRange(data, current + 5, current + 7);
-        int height = getIntFromRange(data, current + 7, current + 9);
-        completer.reply(Size(width, height));
-        sub.cancel();
-        return;
       }
-    });
+    }
+
+    getSizeAsync();
 
     return completer.future;
   }
@@ -60,8 +56,23 @@ class JpegDecoder {
     return int.tryParse(sb.toString(), radix: 16);
   }
 
-  void printRange(List<int> list, int start, int end) {
-    final range = list.getRange(start, end).toList();
-    print(range);
+  Future<BlockEntity> getBlockInfo(int blackStart) async {
+    try {
+      final blockInfoList =
+          await fileUtils.readRange(blackStart, blackStart + 4);
+
+      if (blockInfoList[0] != 0xFF) {
+        return null;
+      }
+
+      final radix16List =
+          await fileUtils.readRange(blackStart + 2, blackStart + 4);
+      final blockLength = convertRadix16ToInt(radix16List) + 2;
+      final typeInt = blockInfoList[1];
+
+      return BlockEntity(typeInt, blockLength);
+    } catch (e) {
+      return null;
+    }
   }
 }
