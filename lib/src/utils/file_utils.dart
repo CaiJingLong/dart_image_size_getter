@@ -7,7 +7,7 @@ class FileUtils {
 
   FileUtils(this.file);
 
-  Future<List<int>> readRange(int start, int end) async {
+  Future<List<int>> getRange(int start, int end) async {
     if (file == null || !file.existsSync()) {
       throw FileNotExistsError();
     }

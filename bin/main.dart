@@ -10,4 +10,8 @@ main(List<String> arguments) async {
   File pngFile = File("asset/ic_launcher.png");
   final pngSize = await FormatUtils.getSize(pngFile);
   print("png = $pngSize");
+
+  File webpFile = File("asset/demo.webp");
+  final webpSize = await FormatUtils.getSize(webpFile);
+  print("webp = $webpSize");
 }

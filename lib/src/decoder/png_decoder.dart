@@ -13,8 +13,8 @@ class PngDecoder extends ImageDecoder {
 
   @override
   Future<Size> get size async {
-    final widthList = await fileUtils.readRange(0x10, 0x14);
-    final heightList = await fileUtils.readRange(0x14, 0x18);
+    final widthList = await fileUtils.getRange(0x10, 0x14);
+    final heightList = await fileUtils.getRange(0x14, 0x18);
 
     final width = convertRadix16ToInt(widthList);
     final height = convertRadix16ToInt(heightList);

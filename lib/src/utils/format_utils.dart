@@ -4,6 +4,7 @@ import 'package:collection/equality.dart';
 
 import 'package:image_size_getter/src/decoder/jpeg_decoder.dart';
 import 'package:image_size_getter/src/decoder/png_decoder.dart';
+import 'package:image_size_getter/src/decoder/webp_decoder.dart';
 import 'package:image_size_getter/src/utils/file_utils.dart';
 
 import '../../image_size_getter.dart';
@@ -48,13 +49,28 @@ class FormatUtils {
     final utils = FileUtils(file);
     final length = file.lengthSync();
 
-    final start = await utils.readRange(0, 8);
-    final end = await utils.readRange(length - 12, length);
+    final start = await utils.getRange(0, 8);
+    final end = await utils.getRange(length - 12, length);
     const eq = IterableEquality();
     if (eq.equals(start, _PngHeaders.sig) && eq.equals(end, _PngHeaders.iend)) {
       return true;
     }
 
+    return false;
+  }
+
+  static Future<bool> isWebp(File file) async {
+    final utils = FileUtils(file);
+
+    final sizeStart = await utils.getRange(0, 4);
+    final sizeEnd = await utils.getRange(8, 12);
+
+    const eq = ListEquality();
+
+    if (eq.equals(sizeStart, _WebpHeaders.fileSizeStart) &&
+        eq.equals(sizeEnd, _WebpHeaders.fileSizeEnd)) {
+      return true;
+    }
     return false;
   }
 
@@ -64,6 +80,9 @@ class FormatUtils {
     }
     if (await isPng(file)) {
       return PngDecoder(file).size;
+    }
+    if (await isWebp(file)) {
+      return WebpDecoder(file).size;
     }
     return Size.zero;
   }
@@ -94,5 +113,21 @@ class _PngHeaders {
     0x42,
     0x60,
     0x82
+  ];
+}
+
+class _WebpHeaders {
+  static const fileSizeStart = [
+    0x52,
+    0x49,
+    0x46,
+    0x46,
+  ];
+
+  static const fileSizeEnd = [
+    0x57,
+    0x45,
+    0x42,
+    0x50,
   ];
 }

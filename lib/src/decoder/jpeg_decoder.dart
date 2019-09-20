@@ -30,8 +30,8 @@ class JpegDecoder extends ImageDecoder {
         }
 
         if (block.type == 0xC0) {
-          final widthList = await fileUtils.readRange(start + 7, start + 9);
-          final heightList = await fileUtils.readRange(start + 5, start + 7);
+          final widthList = await fileUtils.getRange(start + 7, start + 9);
+          final heightList = await fileUtils.getRange(start + 5, start + 7);
           final width = convertRadix16ToInt(widthList);
           final height = convertRadix16ToInt(heightList);
           completer.reply(Size(width, height));
@@ -59,14 +59,14 @@ class JpegDecoder extends ImageDecoder {
   Future<BlockEntity> getBlockInfo(int blackStart) async {
     try {
       final blockInfoList =
-          await fileUtils.readRange(blackStart, blackStart + 4);
+          await fileUtils.getRange(blackStart, blackStart + 4);
 
       if (blockInfoList[0] != 0xFF) {
         return null;
       }
 
       final radix16List =
-          await fileUtils.readRange(blackStart + 2, blackStart + 4);
+          await fileUtils.getRange(blackStart + 2, blackStart + 4);
       final blockLength = convertRadix16ToInt(radix16List) + 2;
       final typeInt = blockInfoList[1];
 
