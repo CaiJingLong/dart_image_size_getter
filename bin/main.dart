@@ -14,4 +14,8 @@ main(List<String> arguments) async {
   File webpFile = File("asset/demo.webp");
   final webpSize = await FormatUtils.getSize(webpFile);
   print("webp = $webpSize");
+
+  File gifFile = File("asset/dialog.gif");
+  final gifSize = await FormatUtils.getSize(gifFile);
+  print("gif = $gifSize");
 }

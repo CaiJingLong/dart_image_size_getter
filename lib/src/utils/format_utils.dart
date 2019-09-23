@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:async';
-import 'package:collection/equality.dart';
+import 'package:collection/collection.dart';
+import 'package:image_size_getter/src/decoder/gif_decoder.dart';
 
 import 'package:image_size_getter/src/decoder/jpeg_decoder.dart';
 import 'package:image_size_getter/src/decoder/png_decoder.dart';
@@ -67,6 +68,19 @@ class FormatUtils {
     return false;
   }
 
+  static Future<bool> isGif(File file) async {
+    final utils = FileUtils(file);
+
+    const eq = ListEquality();
+    final length = file.lengthSync();
+
+    final sizeStart = await utils.getRange(0, 6);
+    final sizeEnd = await utils.getRange(length - 1, length);
+
+    return eq.equals(sizeStart, _GifHeaders.start) &&
+        eq.equals(sizeEnd, _GifHeaders.end);
+  }
+
   static Future<Size> getSize(File file) async {
     if (await isJpg(file)) {
       return JpegDecoder(file).size;
@@ -76,6 +90,9 @@ class FormatUtils {
     }
     if (await isWebp(file)) {
       return WebpDecoder(file).size;
+    }
+    if (await isGif(file)) {
+      return GifDecoder(file).size;
     }
     return Size.zero;
   }
@@ -123,4 +140,17 @@ class _WebpHeaders {
     0x42,
     0x50,
   ];
+}
+
+class _GifHeaders {
+  static const start = [
+    0x47,
+    0x49,
+    0x46,
+    0x38,
+    0x39,
+    0x61,
+  ];
+
+  static const end = [0x3B];
 }
