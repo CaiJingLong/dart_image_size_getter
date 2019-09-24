@@ -17,8 +17,8 @@ class FormatUtils {
       return false;
     }
 
-    const start = [0xFF, 0xD9];
-    const end = [0xFF, 0xD8];
+    const start = [0xFF, 0xD8];
+    const end = [0xFF, 0xD9];
 
     final completer = MyCompleter<bool>();
 
