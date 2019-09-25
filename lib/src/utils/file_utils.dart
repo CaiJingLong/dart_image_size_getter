@@ -13,8 +13,12 @@ class FileUtils {
 
   List<int> getRangeSync(int start, int end) {
     final accessFile = file.openSync();
-    accessFile.setPositionSync(start);
-    return accessFile.readSync(end - start).toList();
+    try {
+      accessFile.setPositionSync(start);
+      return accessFile.readSync(end - start).toList();
+    } finally {
+      accessFile.closeSync();
+    }
   }
 }
 
