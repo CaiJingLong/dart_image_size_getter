@@ -13,9 +13,9 @@ class GifDecoder extends ImageDecoder {
   GifDecoder(this.file) : fileUtils = FileUtils(file);
 
   @override
-  Future<Size> get size async {
-    final widthList = await fileUtils.getRange(6, 8);
-    final heightList = await fileUtils.getRange(8, 10);
+  Size get size {
+    final widthList = fileUtils.getRangeSync(6, 8);
+    final heightList = fileUtils.getRangeSync(8, 10);
 
     final width = convertRadix16ToInt(widthList, reverse: true);
     final height = convertRadix16ToInt(heightList, reverse: true);

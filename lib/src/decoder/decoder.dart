@@ -1,11 +1,11 @@
 import '../core/size.dart';
 
 abstract class ImageDecoder {
-  Future<Size> get size;
+  Size get size;
 
   int convertRadix16ToInt(List<int> list, {bool reverse = false}) {
     final sb = StringBuffer();
-    if(reverse){
+    if (reverse) {
       list = list.toList().reversed.toList();
     }
 

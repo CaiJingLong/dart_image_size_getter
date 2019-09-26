@@ -12,9 +12,9 @@ class WebpDecoder extends ImageDecoder {
   WebpDecoder(this.file) : fileUtils = FileUtils(file);
 
   @override
-  Future<Size> get size async {
-    final widthList = await fileUtils.getRange(0x1a, 0x1c);
-    final heightList = await fileUtils.getRange(0x1c, 0x1e);
+  Size get size {
+    final widthList = fileUtils.getRangeSync(0x1a, 0x1c);
+    final heightList = fileUtils.getRangeSync(0x1c, 0x1e);
     final width = convertRadix16ToInt(widthList, reverse: true);
     final height = convertRadix16ToInt(heightList, reverse: true);
     return Size(width, height);

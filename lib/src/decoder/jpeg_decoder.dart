@@ -15,36 +15,26 @@ class JpegDecoder extends ImageDecoder {
   JpegDecoder(this.file) : fileUtils = FileUtils(file);
 
   @override
-  Future<Size> get size async {
-    final completer = MyCompleter<Size>();
+  Size get size {
+    int start = 2;
+    BlockEntity block;
 
-    void getSizeAsync() async {
-      int start = 2;
-      BlockEntity block;
+    while (true) {
+      block = getBlockInfo(start);
+      if (block == null) {
+        return Size(-1, -1);
+      }
 
-      while (true) {
-        block = await getBlockInfo(start);
-        if (block == null) {
-          completer.reply(Size(-1, -1));
-          break;
-        }
-
-        if (block.type == 0xC0) {
-          final widthList = await fileUtils.getRange(start + 7, start + 9);
-          final heightList = await fileUtils.getRange(start + 5, start + 7);
-          final width = convertRadix16ToInt(widthList);
-          final height = convertRadix16ToInt(heightList);
-          completer.reply(Size(width, height));
-          break;
-        } else {
-          start += block.length;
-        }
+      if (block.type == 0xC0) {
+        final widthList = fileUtils.getRangeSync(start + 7, start + 9);
+        final heightList = fileUtils.getRangeSync(start + 5, start + 7);
+        final width = convertRadix16ToInt(widthList);
+        final height = convertRadix16ToInt(heightList);
+        return Size(width, height);
+      } else {
+        start += block.length;
       }
     }
-
-    getSizeAsync();
-
-    return completer.future;
   }
 
   int getIntFromRange(List<int> list, int start, int end) {
@@ -56,17 +46,16 @@ class JpegDecoder extends ImageDecoder {
     return int.tryParse(sb.toString(), radix: 16);
   }
 
-  Future<BlockEntity> getBlockInfo(int blackStart) async {
+  BlockEntity getBlockInfo(int blackStart) {
     try {
-      final blockInfoList =
-          await fileUtils.getRange(blackStart, blackStart + 4);
+      final blockInfoList = fileUtils.getRangeSync(blackStart, blackStart + 4);
 
       if (blockInfoList[0] != 0xFF) {
         return null;
       }
 
       final radix16List =
-          await fileUtils.getRange(blackStart + 2, blackStart + 4);
+          fileUtils.getRangeSync(blackStart + 2, blackStart + 4);
       final blockLength = convertRadix16ToInt(radix16List) + 2;
       final typeInt = blockInfoList[1];
 

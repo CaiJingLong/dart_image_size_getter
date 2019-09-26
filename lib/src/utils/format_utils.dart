@@ -9,10 +9,9 @@ import 'package:image_size_getter/src/decoder/webp_decoder.dart';
 import 'package:image_size_getter/src/utils/file_utils.dart';
 
 import '../../image_size_getter.dart';
-import '../core/completer.dart';
 
 class FormatUtils {
-  static Future<bool> isJpg(File file) async {
+  static bool isJpg(File file) {
     if (file == null || !file.existsSync()) {
       return false;
     }
@@ -20,31 +19,23 @@ class FormatUtils {
     const start = [0xFF, 0xD8];
     const end = [0xFF, 0xD9];
 
-    final completer = MyCompleter<bool>();
+    final util = FileUtils(file);
+    final length = file.lengthSync();
 
-    void checkAsync() async {
-      final util = FileUtils(file);
-      final length = file.lengthSync();
+    final startList = util.getRangeSync(0, 2);
+    final endList = util.getRangeSync(length - 2, length);
 
-      final startList = await util.getRange(0, 2);
-      final endList = await util.getRange(length - 2, length);
+    const eq = ListEquality();
 
-      const eq = ListEquality();
-
-      completer.reply(eq.equals(start, startList) && eq.equals(end, endList));
-    }
-
-    checkAsync();
-
-    return completer.future;
+    return eq.equals(start, startList) && eq.equals(end, endList);
   }
 
-  static Future<bool> isPng(File file) async {
+  static bool isPng(File file) {
     final utils = FileUtils(file);
     final length = file.lengthSync();
 
-    final start = await utils.getRange(0, 8);
-    final end = await utils.getRange(length - 12, length);
+    final start = utils.getRangeSync(0, 8);
+    final end = utils.getRangeSync(length - 12, length);
     const eq = IterableEquality();
     if (eq.equals(start, _PngHeaders.sig) && eq.equals(end, _PngHeaders.iend)) {
       return true;
@@ -53,11 +44,11 @@ class FormatUtils {
     return false;
   }
 
-  static Future<bool> isWebp(File file) async {
+  static bool isWebp(File file) {
     final utils = FileUtils(file);
 
-    final sizeStart = await utils.getRange(0, 4);
-    final sizeEnd = await utils.getRange(8, 12);
+    final sizeStart = utils.getRangeSync(0, 4);
+    final sizeEnd = utils.getRangeSync(8, 12);
 
     const eq = ListEquality();
 
@@ -68,30 +59,30 @@ class FormatUtils {
     return false;
   }
 
-  static Future<bool> isGif(File file) async {
+  static bool isGif(File file) {
     final utils = FileUtils(file);
 
     const eq = ListEquality();
     final length = file.lengthSync();
 
-    final sizeStart = await utils.getRange(0, 6);
-    final sizeEnd = await utils.getRange(length - 1, length);
+    final sizeStart = utils.getRangeSync(0, 6);
+    final sizeEnd = utils.getRangeSync(length - 1, length);
 
     return eq.equals(sizeStart, _GifHeaders.start) &&
         eq.equals(sizeEnd, _GifHeaders.end);
   }
 
   static Future<Size> getSize(File file) async {
-    if (await isJpg(file)) {
+    if (isJpg(file)) {
       return JpegDecoder(file).size;
     }
-    if (await isPng(file)) {
+    if (isPng(file)) {
       return PngDecoder(file).size;
     }
-    if (await isWebp(file)) {
+    if (isWebp(file)) {
       return WebpDecoder(file).size;
     }
-    if (await isGif(file)) {
+    if (isGif(file)) {
       return GifDecoder(file).size;
     }
     return Size.zero;
