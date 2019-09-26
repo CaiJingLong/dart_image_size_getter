@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:image_size_getter/src/core/completer.dart';
 
 class FileUtils {
   File file;

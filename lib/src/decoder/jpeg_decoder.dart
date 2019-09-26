@@ -1,11 +1,9 @@
-import 'dart:async';
 import 'dart:io';
 
 import 'package:image_size_getter/src/core/size.dart';
 import 'package:image_size_getter/src/entity/block_entity.dart';
 import 'package:image_size_getter/src/utils/file_utils.dart';
 
-import '../core/completer.dart';
 import 'decoder.dart';
 
 class JpegDecoder extends ImageDecoder {
