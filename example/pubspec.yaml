@@ -9,7 +9,7 @@ environment:
 
 dependencies:
   image_size_getter: 
-    path: ../
+    path: ../library
 
 dev_dependencies:
   pedantic: ^1.7.0
