@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:async';
 import 'package:collection/collection.dart';
+import 'package:image_size_getter/image_size_getter.dart';
 import 'package:image_size_getter/src/decoder/gif_decoder.dart';
 
 import 'package:image_size_getter/src/decoder/jpeg_decoder.dart';
@@ -8,9 +9,7 @@ import 'package:image_size_getter/src/decoder/png_decoder.dart';
 import 'package:image_size_getter/src/decoder/webp_decoder.dart';
 import 'package:image_size_getter/src/utils/file_utils.dart';
 
-import '../../image_size_getter.dart';
-
-class FormatUtils {
+class ImageSizGetter {
   static bool isJpg(File file) {
     if (file == null || !file.existsSync()) {
       return false;
@@ -72,7 +71,7 @@ class FormatUtils {
         eq.equals(sizeEnd, _GifHeaders.end);
   }
 
-  static Future<Size> getSize(File file) async {
+  static Size getSize(File file) {
     if (isJpg(file)) {
       return JpegDecoder(file).size;
     }
