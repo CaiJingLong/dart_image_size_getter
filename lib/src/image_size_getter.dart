@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'dart:async';
 import 'package:collection/collection.dart';
 import 'package:image_size_getter/image_size_getter.dart';
 import 'package:image_size_getter/src/decoder/gif_decoder.dart';
