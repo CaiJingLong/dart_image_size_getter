@@ -2,7 +2,7 @@
 
 Do not completely decode the image file, just read the metadata to get the image width and height.
 
-Just support jpeg, git, png, webp.
+Just support jpeg, gif, png, webp.
 
 ## Usage
 
