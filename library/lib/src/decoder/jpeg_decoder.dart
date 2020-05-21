@@ -23,7 +23,7 @@ class JpegDecoder extends ImageDecoder {
         return Size(-1, -1);
       }
 
-      if (block.type == 0xC0) {
+      if (block.type == 0xC0 || block.type == 0xC2) {
         final widthList = fileUtils.getRangeSync(start + 7, start + 9);
         final heightList = fileUtils.getRangeSync(start + 5, start + 7);
         final width = convertRadix16ToInt(widthList);
