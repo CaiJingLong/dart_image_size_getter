@@ -1,39 +1,36 @@
-import 'dart:io';
 import 'package:collection/collection.dart';
 import 'package:image_size_getter/image_size_getter.dart';
+import 'package:image_size_getter/src/core/input.dart';
 import 'package:image_size_getter/src/decoder/gif_decoder.dart';
 
 import 'package:image_size_getter/src/decoder/jpeg_decoder.dart';
 import 'package:image_size_getter/src/decoder/png_decoder.dart';
 import 'package:image_size_getter/src/decoder/webp_decoder.dart';
-import 'package:image_size_getter/src/utils/file_utils.dart';
+export 'core/input.dart';
 
-class ImageSizGetter {
-  static bool isJpg(File file) {
-    if (file == null || !file.existsSync()) {
+class ImageSizeGetter {
+  static bool isJpg(ImageInput input) {
+    if (input == null || !input.exists()) {
       return false;
     }
 
     const start = [0xFF, 0xD8];
     const end = [0xFF, 0xD9];
 
-    final util = FileUtils(file);
-    final length = file.lengthSync();
-
-    final startList = util.getRangeSync(0, 2);
-    final endList = util.getRangeSync(length - 2, length);
+    final length = input.length;
+    final startList = input.getRange(0, 2);
+    final endList = input.getRange(length - 2, length);
 
     const eq = ListEquality();
 
     return eq.equals(start, startList) && eq.equals(end, endList);
   }
 
-  static bool isPng(File file) {
-    final utils = FileUtils(file);
-    final length = file.lengthSync();
+  static bool isPng(ImageInput input) {
+    final length = input.length;
 
-    final start = utils.getRangeSync(0, 8);
-    final end = utils.getRangeSync(length - 12, length);
+    final start = input.getRange(0, 8);
+    final end = input.getRange(length - 12, length);
     const eq = IterableEquality();
     if (eq.equals(start, _PngHeaders.sig) && eq.equals(end, _PngHeaders.iend)) {
       return true;
@@ -42,11 +39,9 @@ class ImageSizGetter {
     return false;
   }
 
-  static bool isWebp(File file) {
-    final utils = FileUtils(file);
-
-    final sizeStart = utils.getRangeSync(0, 4);
-    final sizeEnd = utils.getRangeSync(8, 12);
+  static bool isWebp(ImageInput input) {
+    final sizeStart = input.getRange(0, 4);
+    final sizeEnd = input.getRange(8, 12);
 
     const eq = ListEquality();
 
@@ -57,31 +52,29 @@ class ImageSizGetter {
     return false;
   }
 
-  static bool isGif(File file) {
-    final utils = FileUtils(file);
-
+  static bool isGif(ImageInput input) {
     const eq = ListEquality();
-    final length = file.lengthSync();
+    final length = input.length;
 
-    final sizeStart = utils.getRangeSync(0, 6);
-    final sizeEnd = utils.getRangeSync(length - 1, length);
+    final sizeStart = input.getRange(0, 6);
+    final sizeEnd = input.getRange(length - 1, length);
 
     return eq.equals(sizeStart, _GifHeaders.start) &&
         eq.equals(sizeEnd, _GifHeaders.end);
   }
 
-  static Size getSize(File file) {
-    if (isJpg(file)) {
-      return JpegDecoder(file).size;
+  static Size getSize(ImageInput input) {
+    if (isJpg(input)) {
+      return JpegDecoder(input).size;
     }
-    if (isPng(file)) {
-      return PngDecoder(file).size;
+    if (isPng(input)) {
+      return PngDecoder(input).size;
     }
-    if (isWebp(file)) {
-      return WebpDecoder(file).size;
+    if (isWebp(input)) {
+      return WebpDecoder(input).size;
     }
-    if (isGif(file)) {
-      return GifDecoder(file).size;
+    if (isGif(input)) {
+      return GifDecoder(input).size;
     }
     return Size.zero;
   }
