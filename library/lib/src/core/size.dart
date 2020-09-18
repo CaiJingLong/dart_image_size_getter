@@ -1,4 +1,4 @@
-import 'package:image_size_getter/src/utils/hashcodes.dart';
+import 'package:hashcodes/hashcodes.dart';
 
 class Size {
   int width;
