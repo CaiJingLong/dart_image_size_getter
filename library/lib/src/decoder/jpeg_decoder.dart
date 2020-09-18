@@ -1,16 +1,13 @@
-import 'dart:io';
-
+import 'package:image_size_getter/src/core/input.dart';
 import 'package:image_size_getter/src/core/size.dart';
 import 'package:image_size_getter/src/entity/block_entity.dart';
-import 'package:image_size_getter/src/utils/file_utils.dart';
 
 import 'decoder.dart';
 
 class JpegDecoder extends ImageDecoder {
-  final File file;
-  final FileUtils fileUtils;
+  final ImageInput input;
 
-  JpegDecoder(this.file) : fileUtils = FileUtils(file);
+  JpegDecoder(this.input);
 
   @override
   Size get size {
@@ -24,8 +21,8 @@ class JpegDecoder extends ImageDecoder {
       }
 
       if (block.type == 0xC0 || block.type == 0xC2) {
-        final widthList = fileUtils.getRangeSync(start + 7, start + 9);
-        final heightList = fileUtils.getRangeSync(start + 5, start + 7);
+        final widthList = input.getRange(start + 7, start + 9);
+        final heightList = input.getRange(start + 5, start + 7);
         final width = convertRadix16ToInt(widthList);
         final height = convertRadix16ToInt(heightList);
         return Size(width, height);
@@ -46,14 +43,13 @@ class JpegDecoder extends ImageDecoder {
 
   BlockEntity getBlockInfo(int blackStart) {
     try {
-      final blockInfoList = fileUtils.getRangeSync(blackStart, blackStart + 4);
+      final blockInfoList = input.getRange(blackStart, blackStart + 4);
 
       if (blockInfoList[0] != 0xFF) {
         return null;
       }
 
-      final radix16List =
-          fileUtils.getRangeSync(blackStart + 2, blackStart + 4);
+      final radix16List = input.getRange(blackStart + 2, blackStart + 4);
       final blockLength = convertRadix16ToInt(radix16List) + 2;
       final typeInt = blockInfoList[1];
 
