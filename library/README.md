@@ -10,23 +10,54 @@ Just support jpeg, gif, png, webp.
 import 'dart:io';
 
 import 'package:image_size_getter/image_size_getter.dart';
+import 'package:image_size_getter/file_input.dart'; // For compatibility with flutter web.
 
-main(List<String> arguments) async {
-  File file = File("asset/IMG_20180908_080245.jpg");
-  final size = ImageSizGetter.getSize(file);
-  print("jpg = $size");
+void main(List<String> arguments) async {
+  final file = File('asset/IMG_20180908_080245.jpg');
+  final size = ImageSizGetter.getSize(FileInput(file));
+  print('jpg = $size');
 
-  File pngFile = File("asset/ic_launcher.png");
-  final pngSize = ImageSizGetter.getSize(pngFile);
-  print("png = $pngSize");
+  final pngFile = File('asset/ic_launcher.png');
+  final pngSize = ImageSizGetter.getSize(FileInput(pngFile));
+  print('png = $pngSize');
 
-  File webpFile = File("asset/demo.webp");
-  final webpSize = ImageSizGetter.getSize(webpFile);
-  print("webp = $webpSize");
+  final webpFile = File('asset/demo.webp');
+  final webpSize = ImageSizGetter.getSize(FileInput(webpFile));
+  print('webp = $webpSize');
 
-  File gifFile = File("asset/dialog.gif");
-  final gifSize = ImageSizGetter.getSize(gifFile);
-  print("gif = $gifSize");
+  final gifFile = File('asset/dialog.gif');
+  final gifSize = ImageSizGetter.getSize(FileInput(gifFile));
+  print('gif = $gifSize');
 }
 
 ```
+
+MemoryImage
+
+```dart
+import 'package:image_size_getter/image_size_getter.dart';
+
+void foo(Uint8List image){
+  final memoryImageSize = ImageSizeGetter.getSize(MemoryInput(image));
+  print('memoryImageSize = $memoryImageSize');
+}
+```
+
+## migrate
+
+See [migrate](https://github.com/CaiJingLong/dart_image_size_getter/blob/master/library/migrate.md)
+
+## Other question
+
+The package is dart package, no just flutter package.
+So, if you want to get flutter asset image size, you must convert it to memory(Uint8List).
+
+```dart
+final buffer = await rootBundle.load('assets/logo.png'); // get the byte buffer
+final memoryImageSize = ImageSizeGetter.getSize(MemoryInput.byteBuffer(buffer));
+print('memoryImageSize = $memoryImageSize');
+```
+
+## LICENSE
+
+Apache 2.0

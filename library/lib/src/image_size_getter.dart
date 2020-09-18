@@ -8,7 +8,7 @@ import 'package:image_size_getter/src/decoder/png_decoder.dart';
 import 'package:image_size_getter/src/decoder/webp_decoder.dart';
 export 'core/input.dart';
 
-class ImageSizGetter {
+class ImageSizeGetter {
   static bool isJpg(ImageInput input) {
     if (input == null || !input.exists()) {
       return false;
