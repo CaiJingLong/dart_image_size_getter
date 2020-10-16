@@ -19,4 +19,14 @@ void main(List<String> arguments) async {
   final gifFile = File('asset/dialog.gif');
   final gifSize = ImageSizeGetter.getSize(FileInput(gifFile));
   print('gif = $gifSize');
+
+  // errorExample();
+}
+
+void errorExample() {
+  final input = FileInput(File(
+      '/Users/jinglongcai/Desktop/96068243-1d25cb00-0ece-11eb-9f2c-6b958756c769.jpg'));
+
+  final size = ImageSizeGetter.getSize(input);
+  print(size);
 }

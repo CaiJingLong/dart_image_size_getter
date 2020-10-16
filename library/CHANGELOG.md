@@ -9,10 +9,14 @@
 ## 0.2.1
 
 Update dependency.
+Fix readme.
 
 ## 0.2.0
 
 Support memory type.
+
+Breaking change:
+Fix: type of `ImageSizeGetter`
 
 ## 0.1.1
 
