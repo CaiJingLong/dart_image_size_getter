@@ -15,15 +15,17 @@ class ImageSizeGetter {
     }
 
     const start = [0xFF, 0xD8];
-    const end = [0xFF, 0xD9];
-
-    final length = await input.length;
     final startList = await input.getRange(0, 2);
-    final endList = await input.getRange(length - 2, length);
-
     const eq = ListEquality();
 
-    return eq.equals(start, startList) && eq.equals(end, endList);
+    if (input.runtimeType != NetworkInput) {
+      const end = [0xFF, 0xD9];
+      final length = await input.length;
+      final endList = await input.getRange(length - 2, length);
+      return eq.equals(start, startList) && eq.equals(end, endList);
+    } else {
+      return eq.equals(start, startList);
+    }
   }
 
   static Future<bool> isPng(ImageInput input) async {
