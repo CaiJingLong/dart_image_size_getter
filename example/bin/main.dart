@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:image_size_getter/image_size_getter.dart';
 import 'package:image_size_getter/file_input.dart';
+import 'package:image_size_getter/src/core/network_input.dart';
 
 void main(List<String> arguments) async {
   final file = File('asset/IMG_20180908_080245.jpg');
@@ -19,6 +20,11 @@ void main(List<String> arguments) async {
   final gifFile = File('asset/dialog.gif');
   final gifSize = await ImageSizeGetter.getSize(FileInput(gifFile));
   print('gif = $gifSize');
+
+  final jpegNetworkFile = NetworkInput(
+      'https://images.unsplash.com/photo-1603744837416-bcffee8f5f8e');
+  final jpegNetworkSize = await ImageSizeGetter.getSize(jpegNetworkFile);
+  print('jpeg network = $jpegNetworkSize');
 
   // errorExample();
 }
