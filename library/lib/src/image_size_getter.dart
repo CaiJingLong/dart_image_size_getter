@@ -32,12 +32,16 @@ class ImageSizeGetter {
     final length = await input.length;
 
     final start = await input.getRange(0, 8);
-    final end = await input.getRange(length - 12, length);
     const eq = IterableEquality();
-    if (eq.equals(start, _PngHeaders.sig) && eq.equals(end, _PngHeaders.iend)) {
+    if (input.runtimeType != NetworkInput) {
+      final end = await input.getRange(length - 12, length);
+      if (eq.equals(start, _PngHeaders.sig) &&
+          eq.equals(end, _PngHeaders.iend)) {
+        return true;
+      }
+    } else if (eq.equals(start, _PngHeaders.sig)) {
       return true;
     }
-
     return false;
   }
 
@@ -59,10 +63,13 @@ class ImageSizeGetter {
     final length = await input.length;
 
     final sizeStart = await input.getRange(0, 6);
-    final sizeEnd = await input.getRange(length - 1, length);
-
-    return eq.equals(sizeStart, _GifHeaders.start) &&
-        eq.equals(sizeEnd, _GifHeaders.end);
+    if (input.runtimeType != NetworkInput) {
+      final sizeEnd = await input.getRange(length - 1, length);
+      return eq.equals(sizeStart, _GifHeaders.start) &&
+          eq.equals(sizeEnd, _GifHeaders.end);
+    } else {
+      return eq.equals(sizeStart, _GifHeaders.start);
+    }
   }
 
   static Future<Size> getSize(ImageInput input) async {
