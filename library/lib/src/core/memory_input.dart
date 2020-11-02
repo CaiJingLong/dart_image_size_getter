@@ -11,15 +11,15 @@ class MemoryInput extends ImageInput {
   }
 
   @override
-  List<int> getRange(int start, int end) {
+  Future<List<int>> getRange(int start, int end) async {
     return bytes.sublist(start, end);
   }
 
   @override
-  int get length => bytes.length;
+  Future<int> get length async => bytes.length;
 
   @override
-  bool exists() {
+  Future<bool> exists() async {
     return bytes != null && bytes.isNotEmpty;
   }
 }

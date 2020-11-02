@@ -9,28 +9,28 @@ import 'package:image_size_getter/src/decoder/webp_decoder.dart';
 export 'core/input.dart';
 
 class ImageSizeGetter {
-  static bool isJpg(ImageInput input) {
-    if (input == null || !input.exists()) {
+  static Future<bool> isJpg(ImageInput input) async {
+    if (input == null || !await input.exists()) {
       return false;
     }
 
     const start = [0xFF, 0xD8];
     const end = [0xFF, 0xD9];
 
-    final length = input.length;
-    final startList = input.getRange(0, 2);
-    final endList = input.getRange(length - 2, length);
+    final length = await input.length;
+    final startList = await input.getRange(0, 2);
+    final endList = await input.getRange(length - 2, length);
 
     const eq = ListEquality();
 
     return eq.equals(start, startList) && eq.equals(end, endList);
   }
 
-  static bool isPng(ImageInput input) {
-    final length = input.length;
+  static Future<bool> isPng(ImageInput input) async {
+    final length = await input.length;
 
-    final start = input.getRange(0, 8);
-    final end = input.getRange(length - 12, length);
+    final start = await input.getRange(0, 8);
+    final end = await input.getRange(length - 12, length);
     const eq = IterableEquality();
     if (eq.equals(start, _PngHeaders.sig) && eq.equals(end, _PngHeaders.iend)) {
       return true;
@@ -39,9 +39,9 @@ class ImageSizeGetter {
     return false;
   }
 
-  static bool isWebp(ImageInput input) {
-    final sizeStart = input.getRange(0, 4);
-    final sizeEnd = input.getRange(8, 12);
+  static Future<bool> isWebp(ImageInput input) async {
+    final sizeStart = await input.getRange(0, 4);
+    final sizeEnd = await input.getRange(8, 12);
 
     const eq = ListEquality();
 
@@ -52,28 +52,28 @@ class ImageSizeGetter {
     return false;
   }
 
-  static bool isGif(ImageInput input) {
+  static Future<bool> isGif(ImageInput input) async {
     const eq = ListEquality();
-    final length = input.length;
+    final length = await input.length;
 
-    final sizeStart = input.getRange(0, 6);
-    final sizeEnd = input.getRange(length - 1, length);
+    final sizeStart = await input.getRange(0, 6);
+    final sizeEnd = await input.getRange(length - 1, length);
 
     return eq.equals(sizeStart, _GifHeaders.start) &&
         eq.equals(sizeEnd, _GifHeaders.end);
   }
 
-  static Size getSize(ImageInput input) {
-    if (isJpg(input)) {
+  static Future<Size> getSize(ImageInput input) async {
+    if (await isJpg(input)) {
       return JpegDecoder(input).size;
     }
-    if (isPng(input)) {
+    if (await isPng(input)) {
       return PngDecoder(input).size;
     }
-    if (isWebp(input)) {
+    if (await isWebp(input)) {
       return WebpDecoder(input).size;
     }
-    if (isGif(input)) {
+    if (await isGif(input)) {
       return GifDecoder(input).size;
     }
     return Size.zero;

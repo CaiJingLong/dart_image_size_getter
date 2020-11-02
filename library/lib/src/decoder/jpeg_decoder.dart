@@ -10,19 +10,19 @@ class JpegDecoder extends ImageDecoder {
   JpegDecoder(this.input);
 
   @override
-  Size get size {
+  Future<Size> get size async {
     int start = 2;
     BlockEntity block;
 
     while (true) {
-      block = getBlockInfo(start);
+      block = await getBlockInfo(start);
       if (block == null) {
         return Size(-1, -1);
       }
 
       if (block.type == 0xC0 || block.type == 0xC2) {
-        final widthList = input.getRange(start + 7, start + 9);
-        final heightList = input.getRange(start + 5, start + 7);
+        final widthList = await input.getRange(start + 7, start + 9);
+        final heightList = await input.getRange(start + 5, start + 7);
         final width = convertRadix16ToInt(widthList);
         final height = convertRadix16ToInt(heightList);
         return Size(width, height);
@@ -41,15 +41,15 @@ class JpegDecoder extends ImageDecoder {
     return int.tryParse(sb.toString(), radix: 16);
   }
 
-  BlockEntity getBlockInfo(int blackStart) {
+  Future<BlockEntity> getBlockInfo(int blackStart) async {
     try {
-      final blockInfoList = input.getRange(blackStart, blackStart + 4);
+      final blockInfoList = await input.getRange(blackStart, blackStart + 4);
 
       if (blockInfoList[0] != 0xFF) {
         return null;
       }
 
-      final radix16List = input.getRange(blackStart + 2, blackStart + 4);
+      final radix16List = await input.getRange(blackStart + 2, blackStart + 4);
       final blockLength = convertRadix16ToInt(radix16List) + 2;
       final typeInt = blockInfoList[1];
 

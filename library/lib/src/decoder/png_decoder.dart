@@ -8,9 +8,9 @@ class PngDecoder extends ImageDecoder {
 
   PngDecoder(this.input);
 
-  Size get size {
-    final widthList = input.getRange(0x10, 0x14);
-    final heightList = input.getRange(0x14, 0x18);
+  Future<Size> get size async {
+    final widthList = await input.getRange(0x10, 0x14);
+    final heightList = await input.getRange(0x14, 0x18);
 
     final width = convertRadix16ToInt(widthList);
     final height = convertRadix16ToInt(heightList);

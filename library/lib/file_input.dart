@@ -9,16 +9,16 @@ class FileInput extends ImageInput {
   FileInput(this.file);
 
   @override
-  List<int> getRange(int start, int end) {
+  Future<List<int>> getRange(int start, int end) async {
     final utils = FileUtils(file);
     return utils.getRangeSync(start, end);
   }
 
   @override
-  int get length => file.lengthSync();
+  Future<int> get length async => file.lengthSync();
 
   @override
-  bool exists() {
+  Future<bool> exists() async {
     return file != null && file.existsSync();
   }
 }
