@@ -12,8 +12,8 @@ class PngDecoder extends ImageDecoder {
     final widthList = input.getRange(0x10, 0x14);
     final heightList = input.getRange(0x14, 0x18);
 
-    final width = convertRadix16ToInt(widthList);
-    final height = convertRadix16ToInt(heightList);
+    final width = convertRadix16ToInt(widthList)!;
+    final height = convertRadix16ToInt(heightList)!;
 
     return Size(width, height);
   }

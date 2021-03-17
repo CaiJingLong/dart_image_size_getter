@@ -12,7 +12,7 @@ class JpegDecoder extends ImageDecoder {
   @override
   Size get size {
     int start = 2;
-    BlockEntity block;
+    BlockEntity? block;
 
     while (true) {
       block = getBlockInfo(start);
@@ -23,8 +23,8 @@ class JpegDecoder extends ImageDecoder {
       if (block.type == 0xC0 || block.type == 0xC2) {
         final widthList = input.getRange(start + 7, start + 9);
         final heightList = input.getRange(start + 5, start + 7);
-        final width = convertRadix16ToInt(widthList);
-        final height = convertRadix16ToInt(heightList);
+        final width = convertRadix16ToInt(widthList)!;
+        final height = convertRadix16ToInt(heightList)!;
         return Size(width, height);
       } else {
         start += block.length;
@@ -32,7 +32,7 @@ class JpegDecoder extends ImageDecoder {
     }
   }
 
-  int getIntFromRange(List<int> list, int start, int end) {
+  int? getIntFromRange(List<int> list, int start, int end) {
     final rangeInt = list.getRange(start, end);
     final sb = StringBuffer();
     for (final i in rangeInt) {
@@ -41,7 +41,7 @@ class JpegDecoder extends ImageDecoder {
     return int.tryParse(sb.toString(), radix: 16);
   }
 
-  BlockEntity getBlockInfo(int blackStart) {
+  BlockEntity? getBlockInfo(int blackStart) {
     try {
       final blockInfoList = input.getRange(blackStart, blackStart + 4);
 
@@ -50,7 +50,7 @@ class JpegDecoder extends ImageDecoder {
       }
 
       final radix16List = input.getRange(blackStart + 2, blackStart + 4);
-      final blockLength = convertRadix16ToInt(radix16List) + 2;
+      final blockLength = convertRadix16ToInt(radix16List)! + 2;
       final typeInt = blockInfoList[1];
 
       return BlockEntity(typeInt, blockLength);
