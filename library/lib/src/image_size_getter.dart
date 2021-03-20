@@ -78,7 +78,7 @@ class ImageSizeGetter {
   }
 }
 
-class AsyncImageGetter {
+class AsyncImageSizeGetter {
   static Future<bool> isJpg(AsyncImageInput input) async {
     if (input == null || !(await input.exists())) {
       return false;
