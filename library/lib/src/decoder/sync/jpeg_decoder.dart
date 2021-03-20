@@ -8,7 +8,7 @@ class JpegDecoder extends ImageDecoder {
   @override
   Size get size {
     int start = 2;
-    BlockEntity block;
+    BlockEntity? block;
 
     while (true) {
       block = getBlockInfo(start);
@@ -34,10 +34,10 @@ class JpegDecoder extends ImageDecoder {
     for (final i in rangeInt) {
       sb.write(i.toRadixString(16).padLeft(2, '0'));
     }
-    return int.tryParse(sb.toString(), radix: 16);
+    return int.tryParse(sb.toString(), radix: 16) ?? 0;
   }
 
-  BlockEntity getBlockInfo(int blackStart) {
+  BlockEntity? getBlockInfo(int blackStart) {
     try {
       final blockInfoList = input.getRange(blackStart, blackStart + 4);
 

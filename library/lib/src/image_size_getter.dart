@@ -8,7 +8,7 @@ export 'core/input.dart';
 
 class ImageSizeGetter {
   static bool isJpg(ImageInput input) {
-    if (input == null || !input.exists()) {
+    if (!input.exists()) {
       return false;
     }
 
@@ -80,7 +80,7 @@ class ImageSizeGetter {
 
 class AsyncImageSizeGetter {
   static Future<bool> isJpg(AsyncImageInput input) async {
-    if (input == null || !(await input.exists())) {
+    if (!(await input.exists())) {
       return false;
     }
 

@@ -6,7 +6,7 @@ class JpegDecoder extends AsyncImageDecoder {
   @override
   Future<Size> get size async {
     int start = 2;
-    BlockEntity block;
+    BlockEntity? block;
 
     while (true) {
       block = await getBlockInfo(start);
@@ -32,10 +32,10 @@ class JpegDecoder extends AsyncImageDecoder {
     for (final i in rangeInt) {
       sb.write(i.toRadixString(16).padLeft(2, '0'));
     }
-    return int.tryParse(sb.toString(), radix: 16);
+    return int.tryParse(sb.toString(), radix: 16) ?? 0;
   }
 
-  Future<BlockEntity> getBlockInfo(int blackStart) async {
+  Future<BlockEntity?> getBlockInfo(int blackStart) async {
     try {
       final blockInfoList = await input.getRange(blackStart, blackStart + 4);
 
