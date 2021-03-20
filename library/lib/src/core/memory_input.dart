@@ -20,6 +20,6 @@ class MemoryInput extends ImageInput {
 
   @override
   bool exists() {
-    return bytes != null && bytes.isNotEmpty;
+    return bytes.isNotEmpty;
   }
 }

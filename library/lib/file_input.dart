@@ -19,6 +19,6 @@ class FileInput extends ImageInput {
 
   @override
   bool exists() {
-    return file != null && file.existsSync();
+    return file.existsSync();
   }
 }

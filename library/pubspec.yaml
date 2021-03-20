@@ -1,17 +1,16 @@
 name: image_size_getter
 description: Get image width and height, the library does not completely decode the image file, just read the metadata to get the image width and height.
-version: 0.3.0
+version: 1.0.0
 homepage: https://github.com/CaiJingLong/dart_image_size_getter/tree/master/library
 publish_to: https://pub.dev
 
 environment:
-  sdk: ">=2.2.0 <3.0.0"
+  sdk: ">=2.12.0 <3.0.0"
 
 dependencies:
-  collection: ^1.14.12
-  hashcodes: ^1.0.0
-#  path: ^1.6.0
+  collection: ^1.15.0
+  hashcodes: ^2.0.0
 
 dev_dependencies:
-  pedantic: ^1.7.0
-  test: ^1.5.0
+  pedantic: ^1.11.0
+  test: ^1.16.8

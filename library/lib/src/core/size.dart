@@ -13,7 +13,7 @@ class Size {
     return "Size( $width, $height )";
   }
 
-  bool operator ==(obj) {
+  bool operator ==(Object? obj) {
     if (identical(obj, this)) {
       return true;
     }

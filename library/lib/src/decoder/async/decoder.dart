@@ -26,6 +26,6 @@ abstract class AsyncImageDecoder {
       sb.write(i.toRadixString(16).padLeft(2, '0'));
     }
     final numString = sb.toString();
-    return int.tryParse(numString, radix: 16);
+    return int.tryParse(numString, radix: 16) ?? 0;
   }
 }
