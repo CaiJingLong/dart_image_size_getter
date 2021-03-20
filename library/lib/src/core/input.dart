@@ -7,3 +7,13 @@ abstract class ImageInput {
 
   bool exists();
 }
+
+abstract class AsyncImageInput {
+  const AsyncImageInput();
+
+  Future<int> get length;
+
+  Future<List<int>> getRange(int start, int end);
+
+  Future<bool> exists();
+}

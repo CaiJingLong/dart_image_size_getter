@@ -1,8 +1,4 @@
-import 'package:image_size_getter/src/core/input.dart';
-import 'package:image_size_getter/src/core/size.dart';
-import 'package:image_size_getter/src/entity/block_entity.dart';
-
-import 'decoder.dart';
+part of 'decoder.dart';
 
 class JpegDecoder extends ImageDecoder {
   final ImageInput input;

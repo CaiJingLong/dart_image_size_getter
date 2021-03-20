@@ -1,7 +1,4 @@
-import 'package:image_size_getter/src/core/input.dart';
-import 'package:image_size_getter/src/core/size.dart';
-
-import 'decoder.dart';
+part of 'decoder.dart';
 
 class GifDecoder extends ImageDecoder {
   final ImageInput input;

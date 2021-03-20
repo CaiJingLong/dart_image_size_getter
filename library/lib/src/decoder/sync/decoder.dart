@@ -1,4 +1,13 @@
-import '../core/size.dart';
+import 'package:image_size_getter/src/core/size.dart';
+
+import 'package:image_size_getter/src/entity/block_entity.dart';
+
+import 'package:image_size_getter/src/core/input.dart';
+
+part 'gif_decoder.dart';
+part 'jpeg_decoder.dart';
+part 'png_decoder.dart';
+part 'webp_decoder.dart';
 
 abstract class ImageDecoder {
   Size get size;
