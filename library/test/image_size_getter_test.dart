@@ -12,6 +12,13 @@ void main() {
     await expectLater(size, Size(988, 466));
   });
 
+  test('Test webp extended format size', () async {
+    final file = File('../example/asset/demo_extended.webp');
+    final size = ImageSizeGetter.getSize(FileInput(file));
+    print('size = $size');
+    await expectLater(size, Size(988, 466));
+  });
+
   test('Test jpeg size', () async {
     final file = File('../example/asset/IMG_20180908_080245.jpg');
     final size = ImageSizeGetter.getSize(FileInput(file));
