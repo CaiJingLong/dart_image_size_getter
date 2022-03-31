@@ -56,6 +56,10 @@ Future<void> main() async {
       final height = 824;
       httpCachePath = '/tmp/img';
 
+      if (Platform.isWindows) {
+        httpCachePath = '${Directory.systemTemp.path}\\img';
+      }
+
       final dir = Directory(httpCachePath);
 
       if (!dir.existsSync()) {

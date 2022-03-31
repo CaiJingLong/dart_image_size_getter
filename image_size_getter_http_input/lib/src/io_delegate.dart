@@ -11,9 +11,15 @@ Future<ImageInputWrapper> createDelegateInput(Uri uri) async {
         'You must set httpCachePath before using http input.');
   }
 
+  String pathSplitter = '/';
+
+  if (Platform.isWindows) {
+    pathSplitter = '\\';
+  }
+
   final response = await get(uri);
   final bodyBytes = response.bodyBytes;
-  final file = File('$httpCachePath/${uri.pathSegments.last}');
+  final file = File('$httpCachePath$pathSplitter${uri.pathSegments.last}');
   await file.writeAsBytes(bodyBytes);
 
   return ImageInputWrapper(
