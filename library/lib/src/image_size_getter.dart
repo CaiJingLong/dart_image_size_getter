@@ -133,6 +133,15 @@ class AsyncImageSizeGetter {
   }
 
   static Future<Size> getSize(AsyncImageInput input) async {
+    if (!(await input.supportRangeLoad())) {
+      final delegateInput = await input.delegateInput();
+      try {
+        return ImageSizeGetter.getSize(delegateInput);
+      } finally {
+        delegateInput.release();
+      }
+    }
+
     if (await isJpg(input)) {
       return ad.JpegDecoder(input).size;
     }
