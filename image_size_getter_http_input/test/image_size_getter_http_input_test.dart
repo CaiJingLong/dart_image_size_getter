@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:image_size_getter/file_input.dart';
 import 'package:image_size_getter/image_size_getter.dart';
 import 'package:image_size_getter_http_input/image_size_getter_http_input.dart';
@@ -53,6 +55,12 @@ Future<void> main() async {
       final width = 2554;
       final height = 824;
       httpCachePath = '/tmp/img';
+
+      final dir = Directory(httpCachePath);
+
+      if (!dir.existsSync()) {
+        dir.createSync(recursive: true);
+      }
 
       final input2 = await createNoSupportRangeLoadHttpInput();
 
