@@ -1,6 +1,5 @@
 import 'package:collection/collection.dart';
 import 'package:image_size_getter/image_size_getter.dart';
-import 'package:image_size_getter/src/core/input.dart';
 import 'package:image_size_getter/src/decoder/sync/decoder.dart';
 import 'package:image_size_getter/src/decoder/async/decoder.dart' as ad;
 
