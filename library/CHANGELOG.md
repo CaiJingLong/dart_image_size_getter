@@ -1,7 +1,7 @@
 # CHANGELOG
 
 - [CHANGELOG](#changelog)
-  - [1.0.1](#101)
+  - [1.1.0](#110)
     - [What's Changed](#whats-changed)
     - [New Contributors](#new-contributors)
   - [1.0.0](#100)
@@ -11,7 +11,7 @@
   - [0.1.1](#011)
   - [0.1.0](#010)
 
-## 1.0.1
+## 1.1.0
 
 ### What's Changed
 
@@ -21,7 +21,7 @@
 
 - @nkming2 made their first contribution in <https://github.com/CaiJingLong/dart_image_size_getter/pull/11>
 
-**Full Changelog**: <https://github.com/CaiJingLong/dart_image_size_getter/compare/1.0.0...1.0.1>
+**Full Changelog**: <https://github.com/CaiJingLong/dart_image_size_getter/compare/1.0.0...1.1.0>
 
 ## 1.0.0
 
