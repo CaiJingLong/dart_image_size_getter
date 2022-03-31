@@ -54,11 +54,9 @@ Future<void> main() async {
     test('Test release resource.', () async {
       final width = 2554;
       final height = 824;
-      httpCachePath = '/tmp/img';
 
-      if (Platform.isWindows) {
-        httpCachePath = '${Directory.systemTemp.path}\\img';
-      }
+      httpCachePath =
+          '${Directory.systemTemp.path}${Platform.pathSeparator}img';
 
       final dir = Directory(httpCachePath);
 
@@ -76,7 +74,7 @@ Future<void> main() async {
       }
       final size = ImageSizeGetter.getSize(delegateInput);
 
-      delegateInput.release();
+      await delegateInput.release();
 
       expect(size.width, width);
       expect(size.height, height);
