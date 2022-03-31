@@ -13,6 +13,8 @@ abstract class AsyncImageInput {
 
   factory AsyncImageInput.input(ImageInput input) = _SyncInputWrapper;
 
+  Future<bool> supportRangeLoad();
+
   Future<int> get length;
 
   Future<List<int>> getRange(int start, int end);
@@ -24,6 +26,11 @@ class _SyncInputWrapper extends AsyncImageInput {
   final ImageInput _input;
 
   const _SyncInputWrapper(this._input);
+
+  @override
+  Future<bool> supportRangeLoad() async {
+    return true;
+  }
 
   @override
   Future<bool> exists() async {
