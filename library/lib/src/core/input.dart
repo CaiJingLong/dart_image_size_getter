@@ -16,10 +16,10 @@ class HaveResourceImageInput extends ImageInput {
 
   final ImageInput innerInput;
 
-  final void Function()? onRelease;
+  final Future<void> Function()? onRelease;
 
-  void release() {
-    onRelease?.call();
+  Future<void> release() async {
+    await onRelease?.call();
   }
 
   @override

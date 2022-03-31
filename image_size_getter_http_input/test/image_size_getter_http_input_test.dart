@@ -4,7 +4,15 @@ import 'package:image_size_getter_http_input/image_size_getter_http_input.dart';
 import 'package:test/test.dart';
 
 Future<HttpInput> createSupportRangeLoadHttpInput() async {
-  final testUrl = 'https://s2.loli.net/2022/03/31/9PXW7js3YTHFynw.png';
+  // 2554x824
+  final testUrl =
+      'https://cdn.jsdelivr.net/gh/CaiJingLong/some_asset@master/flutter_photo2.png';
+  return HttpInput.createHttpInput(testUrl);
+}
+
+Future<HttpInput> createNoSupportRangeLoadHttpInput() async {
+  final testUrl =
+      'https://raw.githubusercontent.com/CaiJingLong/some_asset/master/flutter_photo2.png';
   return HttpInput.createHttpInput(testUrl);
 }
 
@@ -31,8 +39,8 @@ Future<void> main() async {
 
   group('Test get size.', () {
     test('Test get size', () async {
-      final width = 4128;
-      final height = 2564;
+      final width = 2554;
+      final height = 824;
       final size = await AsyncImageSizeGetter.getSize(input);
 
       expect(size.width, width);
@@ -42,15 +50,16 @@ Future<void> main() async {
 
   group('Test HaveResourceImageInput', () {
     test('Test release resource.', () async {
-      final width = 4128;
-      final height = 2564;
-      httpCachePath = '/tmp';
+      final width = 2554;
+      final height = 824;
+      httpCachePath = '/tmp/img';
 
-      final delegateInput = await input.delegateInput();
+      final input2 = await createNoSupportRangeLoadHttpInput();
+
+      final delegateInput = await input2.delegateInput();
       final delegateInnerInput = delegateInput.innerInput;
 
       if (delegateInnerInput is FileInput) {
-        print(delegateInnerInput.file.absolute.path);
         expect(delegateInnerInput.file.existsSync(), true);
       }
       final size = ImageSizeGetter.getSize(delegateInput);
@@ -61,7 +70,6 @@ Future<void> main() async {
       expect(size.height, height);
 
       if (delegateInnerInput is FileInput) {
-        print(delegateInnerInput.file.absolute.path);
         expect(delegateInnerInput.file.existsSync(), false);
       }
     });

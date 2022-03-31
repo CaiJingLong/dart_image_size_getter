@@ -27,7 +27,7 @@ class HttpInput extends AsyncImageInput {
     final input = await createDelegateInput(uri);
     final delegate = HaveResourceImageInput(
       innerInput: input.input,
-      onRelease: () {
+      onRelease: () async {
         input.onRelease();
       },
     );
@@ -46,7 +46,6 @@ class HttpInput extends AsyncImageInput {
     };
 
     return http.get(uri, headers: partRequestHeaders).then((response) {
-      print('getRange: ${response.statusCode}, range: $start-${end - 1}');
       return response.bodyBytes;
     });
   }
