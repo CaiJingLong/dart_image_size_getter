@@ -61,6 +61,10 @@ class ImageSizeGetter {
   }
 
   static Size getSize(ImageInput input) {
+    if (!input.exists()) {
+      throw Exception('The input is not exists.');
+    }
+
     if (isJpg(input)) {
       return JpegDecoder(input).size;
     }
@@ -73,7 +77,8 @@ class ImageSizeGetter {
     if (isGif(input)) {
       return GifDecoder(input).size;
     }
-    return Size.zero;
+
+    throw Exception('The input is not supported.');
   }
 }
 
