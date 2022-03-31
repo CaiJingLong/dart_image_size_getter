@@ -133,6 +133,10 @@ class AsyncImageSizeGetter {
   }
 
   static Future<Size> getSize(AsyncImageInput input) async {
+    if (!await input.exists()) {
+      throw Exception('The input is not exists.');
+    }
+
     if (!(await input.supportRangeLoad())) {
       final delegateInput = await input.delegateInput();
       try {
@@ -154,7 +158,8 @@ class AsyncImageSizeGetter {
     if (await isGif(input)) {
       return ad.GifDecoder(input).size;
     }
-    return Size.zero;
+
+    throw Exception('The input is not supported.');
   }
 }
 
