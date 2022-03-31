@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:image_size_getter/src/core/size.dart';
 
 import 'package:image_size_getter/src/entity/block_entity.dart';
