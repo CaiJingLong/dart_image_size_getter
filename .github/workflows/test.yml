@@ -26,8 +26,5 @@ jobs:
         with:
           sdk: ${{ matrix.sdk }}
 
-      - name: Install dependencies
-        run: dart pub get
-
-      - name: Run tests
-        run: dart test
+      - name: Run test shell
+        run: ./test.sh
