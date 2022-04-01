@@ -1,5 +1,5 @@
 import 'dart:io';
-
+import 'package:http/http.dart' as http;
 import 'package:image_size_getter/file_input.dart';
 import 'package:image_size_getter/image_size_getter.dart';
 import 'package:image_size_getter_http_input/image_size_getter_http_input.dart';
@@ -13,15 +13,17 @@ Future<HttpInput> createSupportRangeLoadHttpInput() async {
 }
 
 Future<HttpInput> createNoSupportRangeLoadHttpInput() async {
-  final testUrl =
-      'https://raw.githubusercontent.com/CaiJingLong/some_asset/master/flutter_photo2.png';
-  return HttpInput.createHttpInput(testUrl);
+  final imgUrl = 'http://localhost:7777/assets/flutter_photo2.png';
+  // final imgUrl = 'http://localhost:7777/assets/flutter_photo3.png';
+  // final testUrl =
+  //     'https://raw.githubusercontent.com/CaiJingLong/some_asset/master/flutter_photo2.png';
+  return HttpInput.createHttpInput(imgUrl);
 }
 
 Future<void> main() async {
   final input = await createSupportRangeLoadHttpInput();
 
-  group('Test http input properties.', () {
+  group('Test http input properties:', () {
     setUp(() async {});
 
     test('Uri exists.', () async {
@@ -39,7 +41,7 @@ Future<void> main() async {
     });
   });
 
-  group('Test get size.', () {
+  group('Test support range load image size:', () {
     test('Test get size', () async {
       final width = 2554;
       final height = 824;
@@ -50,38 +52,99 @@ Future<void> main() async {
     });
   });
 
-  group('Test HaveResourceImageInput', () {
+  group('Test no support range load resource:', () {
+    test('Start image server', () async {
+      await startTestServer(3, testFetch);
+    });
+
     test('Test release resource.', () async {
-      final width = 2554;
-      final height = 824;
+      await startTestServer(3, () async {
+        final width = 2554;
+        final height = 824;
 
-      httpCachePath =
-          '${Directory.systemTemp.path}${Platform.pathSeparator}img';
+        httpCachePath =
+            '${Directory.systemTemp.path}${Platform.pathSeparator}img';
 
-      final dir = Directory(httpCachePath);
+        final dir = Directory(httpCachePath);
 
-      if (!dir.existsSync()) {
-        dir.createSync(recursive: true);
-      }
+        if (!dir.existsSync()) {
+          dir.createSync(recursive: true);
+        }
 
-      final input2 = await createNoSupportRangeLoadHttpInput();
+        final input2 = await createNoSupportRangeLoadHttpInput();
 
-      final delegateInput = await input2.delegateInput();
-      final delegateInnerInput = delegateInput.innerInput;
+        final delegateInput = await input2.delegateInput();
+        final delegateInnerInput = delegateInput.innerInput;
 
-      if (delegateInnerInput is FileInput) {
-        expect(delegateInnerInput.file.existsSync(), true);
-      }
-      final size = ImageSizeGetter.getSize(delegateInput);
+        if (delegateInnerInput is FileInput) {
+          expect(delegateInnerInput.file.existsSync(), true);
+        }
+        final size = ImageSizeGetter.getSize(delegateInput);
 
-      await delegateInput.release();
+        await delegateInput.release();
 
-      expect(size.width, width);
-      expect(size.height, height);
+        expect(size.width, width);
+        expect(size.height, height);
 
-      if (delegateInnerInput is FileInput) {
-        expect(delegateInnerInput.file.existsSync(), false);
-      }
+        if (delegateInnerInput is FileInput) {
+          expect(delegateInnerInput.file.existsSync(), false);
+        }
+      });
     });
   });
+}
+
+Future<void> startTestServer(
+    int waitSeconds, void Function() callAfterStart) async {
+  var path = 'assets/flutter_photo2.png';
+  final fileSrc = File(path);
+
+  final server = await HttpServer.bind(InternetAddress.loopbackIPv4, 7777);
+
+  server.listen((request) {
+    final response = request.response;
+    if (request.method == "GET" || request.method == "HEAD") {
+      final uri = request.uri;
+      if (!uri.toString().startsWith('/$path')) {
+        response.statusCode = 404;
+        response.close();
+        return;
+      }
+
+      response.headers.contentType = ContentType.binary;
+      response.headers.contentLength = fileSrc.lengthSync();
+      // response.headers.set('Accept-Ranges', 'bytes');
+      response.headers.set('Access-Control-Allow-Origin', '*');
+      response.headers.set('Access-Control-Allow-Methods', 'GET, HEAD');
+
+      if (request.method == "GET") {
+        response.add(fileSrc.readAsBytesSync());
+      }
+
+      response.close();
+    } else {
+      response.statusCode = 403;
+      response.close();
+    }
+  });
+
+  // request http
+  print('Server is running at http://${InternetAddress.loopbackIPv4}:7777');
+  print('Press Ctrl-C to stop server or wait $waitSeconds seconds to stop.');
+  callAfterStart();
+  await Future.delayed(Duration(seconds: waitSeconds));
+  server.close();
+}
+
+Future<void> testFetch() async {
+  final url = 'http://localhost:7777/assets/flutter_photo2.png';
+  final url2 = 'http://localhost:7777/assets/flutter_photo4.png';
+
+  testServer(url, 200);
+  testServer(url2, 404);
+}
+
+Future<void> testServer(String url, int statusCode) async {
+  final resp = await http.get(Uri.parse(url));
+  expect(resp.statusCode, statusCode);
 }
