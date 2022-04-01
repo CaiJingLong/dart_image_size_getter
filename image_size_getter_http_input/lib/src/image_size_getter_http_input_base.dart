@@ -28,7 +28,7 @@ class HttpInput extends AsyncImageInput {
     final delegate = HaveResourceImageInput(
       innerInput: input.input,
       onRelease: () async {
-        input.onRelease();
+        await input.onRelease();
       },
     );
     return delegate;
@@ -70,7 +70,7 @@ bool get kIsWeb => 0 == 0.0;
 class ImageInputWrapper {
   final ImageInput input;
 
-  final void Function() onRelease;
+  final Future<void> Function() onRelease;
 
   ImageInputWrapper(this.input, this.onRelease);
 }

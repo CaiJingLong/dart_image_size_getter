@@ -25,7 +25,7 @@ Future<ImageInputWrapper> createDelegateInput(Uri uri) async {
   return ImageInputWrapper(
     FileInput(file),
     () async {
-      await file.delete();
+      file.deleteSync();
     },
   );
 }

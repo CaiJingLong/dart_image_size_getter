@@ -8,6 +8,6 @@ Future<ImageInputWrapper> createDelegateInput(Uri uri) async {
   final bodyBytes = response.bodyBytes;
   return ImageInputWrapper(
     MemoryInput(bodyBytes),
-    () {},
+    () async {},
   );
 }

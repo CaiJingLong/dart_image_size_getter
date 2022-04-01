@@ -65,8 +65,10 @@ Future<void> main() async {
             final width = 2554;
             final height = 824;
 
-            httpCachePath =
-                '${Directory.systemTemp.path}${Platform.pathSeparator}img';
+            final time = DateTime.now().microsecondsSinceEpoch;
+
+            httpCachePath = <String>[Directory.systemTemp.path, 'img', '$time']
+                .join(Platform.pathSeparator);
 
             final dir = Directory(httpCachePath);
 
