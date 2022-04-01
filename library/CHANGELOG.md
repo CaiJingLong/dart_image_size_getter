@@ -17,6 +17,8 @@
 
 - Support webp extended format by @nkming2 in <https://github.com/CaiJingLong/dart_image_size_getter/pull/11>
 
+- Http input by @CaiJingLong in <https://github.com/CaiJingLong/dart_image_size_getter/pull/14>
+
 ### New Contributors
 
 - @nkming2 made their first contribution in <https://github.com/CaiJingLong/dart_image_size_getter/pull/11>

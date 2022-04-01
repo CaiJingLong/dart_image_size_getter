@@ -1,39 +1,38 @@
-<!-- 
-This README describes the package. If you publish this package to pub.dev,
-this README's contents appear on the landing page for your package.
+# http_input
 
-For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/guides/libraries/writing-package-pages). 
+HttpInput for [image_size_getter](https://pub.dev/packages/image_size_getter)
 
-For general information about developing packages, see the Dart guide for
-[creating packages](https://dart.dev/guides/libraries/create-library-packages)
-and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/developing-packages). 
--->
+## Example
 
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
+Tips:
 
-## Features
+1. normally, you should use the api provided by your application server or image server to get the image size instead of using this method.
 
-TODO: List what your package can do. Maybe include images, gifs, or videos.
+1. If you don't have an application server or if the server can't provide the information, then there is another suggestion.
+   - The server support range header and provide content-length header.
+   - Image files larger than 5m or even 10m, as range fetching may require 5 ~ 20 interactions with the server to get the image size.
 
-## Getting started
-
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
-
-## Usage
-
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder. 
+Example:
 
 ```dart
-const like = 'sample';
+import 'package:image_size_getter/image_size_getter.dart';
+import 'package:image_size_getter_http_input/image_size_getter_http_input.dart';
+
+Future<void> foo() async{
+  final testUrl =
+      'https://cdn.jsdelivr.net/gh/CaiJingLong/some_asset@master/flutter_photo2.png';
+  final httpInput = await HttpInput.createHttpInput(testUrl);
+
+  final size = await AsyncImageSizeGetter.getSize(httpInput);
+  print('size: $size');
+}
+
 ```
 
-## Additional information
+### issues
 
-TODO: Tell users more about the package: where to find more information, how to 
-contribute to the package, how to file issues, what response they can expect 
-from the package authors, and more.
+If you are using a non-web environment, then when you request a server that does not support range load, if you are worried about using too much memory, then you can use file as a cache, use `httpCachePath` to set it, or if not, it will use the memory cache. The cache file will be deleted automatically when the fetch size is done.
+
+## LICENSE
+
+Apache License 2.0
