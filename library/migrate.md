@@ -1,5 +1,11 @@
 # Migrate
 
+## 1.0.x To 1.1.0
+
+Usually no change.
+
+However, if you use `AsyncImageSizeGetter` or `AsyncImageInput`, you need to implement 2 new methods.
+
 ## 0.x To 1.x
 
 The version is null-safety version.
