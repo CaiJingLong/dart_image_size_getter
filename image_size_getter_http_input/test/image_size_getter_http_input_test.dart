@@ -18,15 +18,6 @@ Future<HttpInput> createNoSupportRangeLoadHttpInput() async {
   return HttpInput.createHttpInput(imgUrl);
 }
 
-Future<void> foo() async {
-  final testUrl =
-      'https://cdn.jsdelivr.net/gh/CaiJingLong/some_asset@master/flutter_photo2.png';
-  final httpInput = await HttpInput.createHttpInput(testUrl);
-
-  final size = await AsyncImageSizeGetter.getSize(httpInput);
-  print('size: $size');
-}
-
 Future<void> main() async {
   final input = await createSupportRangeLoadHttpInput();
 

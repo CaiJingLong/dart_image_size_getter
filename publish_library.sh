@@ -1,2 +1,2 @@
 cd library
-dart pub publish --server https://pub.dev
+flutter pub pub publish --server https://pub.dev

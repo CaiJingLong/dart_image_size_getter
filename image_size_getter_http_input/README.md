@@ -32,3 +32,7 @@ Future<void> foo() async{
 ### issues
 
 If you are using a non-web environment, then when you request a server that does not support range load, if you are worried about using too much memory, then you can use file as a cache, use `httpCachePath` to set it, or if not, it will use the memory cache. The cache file will be deleted automatically when the fetch size is done.
+
+## LICENSE
+
+Apache License 2.0
