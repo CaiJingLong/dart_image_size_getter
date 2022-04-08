@@ -1,6 +1,7 @@
 # CHANGELOG
 
 - [CHANGELOG](#changelog)
+  - [2.0.0](#200)
   - [1.1.0](#110)
     - [What's Changed](#whats-changed)
     - [New Contributors](#new-contributors)
@@ -10,6 +11,10 @@
   - [0.2.0](#020)
   - [0.1.1](#011)
   - [0.1.0](#010)
+
+## 2.0.0
+
+- Refactored the code and removed the `AsyncImageSizeGetter` class.
 
 ## 1.1.0
 

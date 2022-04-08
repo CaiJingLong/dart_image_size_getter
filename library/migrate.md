@@ -1,5 +1,11 @@
 # Migrate
 
+## 1.x.x To 2.0.0
+
+Remove `AsyncImageSizeGetter`.
+
+Now, We use `ImageSizeGetter.getSizeAsync(AsyncImageInput)` to get image size.
+
 ## 1.0.x To 1.1.0
 
 Usually no change.
