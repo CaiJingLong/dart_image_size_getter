@@ -45,6 +45,16 @@ void main() {
       assert(decoder.isValid(input));
       expect(decoder.getSize(input), Size(988, 466));
     });
+
+    test('Test bmp decoder', () {
+      final bmp = File('../example/asset/demo.bmp');
+
+      const BmpDecoder decoder = BmpDecoder();
+      final input = FileInput(bmp);
+
+      assert(decoder.isValid(input));
+      expect(decoder.getSize(input), Size(256, 256));
+    });
   });
 
   group('Test get size.', () {

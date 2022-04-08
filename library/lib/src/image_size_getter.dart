@@ -22,6 +22,7 @@ final _decoders = _DecoderContainer([
   const JpegDecoder(),
   const WebpDecoder(),
   const PngDecoder(),
+  const BmpDecoder(),
 ]);
 
 class ImageSizeGetter {

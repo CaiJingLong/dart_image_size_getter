@@ -43,6 +43,96 @@ void foo(Uint8List image){
 }
 ```
 
+## AsyncImageInput
+
+If your data source is read asynchronously, consider using `AsyncImageInput`.
+
+A typical use case is [http_input](https://pub.dev/packages/image_size_getter_http_input).
+
+## Custom
+
+We can implement our own input or decoder.
+
+In addition to several built-in implementations, subsequent implementations will also be added to the project through plugin.
+
+### Custom Input
+
+Such as: [http_input](https://github.com/CaiJingLong/dart_image_size_getter/tree/master/image_size_getter_http_input).
+
+### Custom Decoder
+
+Such as bmp decoder
+
+Check the file type:
+
+![VPMMfA](https://cdn.jsdelivr.net/gh/kikt-blog/image@branch-2/uPic/VPMMfA.png)
+
+The width and height:
+
+![AZnx9I](https://cdn.jsdelivr.net/gh/kikt-blog/image@branch-2/uPic/AZnx9I.png)
+
+So, we can write code with:
+
+```dart
+import 'package:image_size_getter/image_size_getter.dart';
+
+class BmpDecoder extends BaseDecoder {
+  const BmpDecoder();
+
+  @override
+  String get decoderName => 'bmp';
+
+  @override
+  Size getSize(ImageInput input) {
+    final widthList = input.getRange(0x12, 0x16);
+    final heightList = input.getRange(0x16, 0x1a);
+
+    final width = convertRadix16ToInt(widthList, reverse: true);
+    final height = convertRadix16ToInt(heightList, reverse: true);
+    return Size(width, height);
+  }
+
+  @override
+  Future<Size> getSizeAsync(AsyncImageInput input) async {
+    final widthList = await input.getRange(0x12, 0x16);
+    final heightList = await input.getRange(0x16, 0x1a);
+
+    final width = convertRadix16ToInt(widthList, reverse: true);
+    final height = convertRadix16ToInt(heightList, reverse: true);
+    return Size(width, height);
+  }
+
+  @override
+  bool isValid(ImageInput input) {
+    final list = input.getRange(0, 2);
+    return _isBmp(list);
+  }
+
+  @override
+  Future<bool> isValidAsync(AsyncImageInput input) async {
+    final list = await input.getRange(0, 2);
+    return _isBmp(list);
+  }
+
+  bool _isBmp(List<int> startList) {
+    return startList[0] == 66 && startList[1] == 77;
+  }
+}
+
+```
+
+Use it:
+
+```dart
+final bmp = File('../example/asset/demo.bmp');
+
+const BmpDecoder decoder = BmpDecoder();
+final input = FileInput(bmp);
+
+assert(decoder.isValid(input));
+expect(decoder.getSize(input), Size(256, 256));
+```
+
 ## migrate
 
 See [migrate](https://github.com/CaiJingLong/dart_image_size_getter/blob/master/library/migrate.md)
