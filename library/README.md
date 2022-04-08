@@ -59,6 +59,8 @@ In addition to several built-in implementations, subsequent implementations will
 
 Such as: [http_input](https://github.com/CaiJingLong/dart_image_size_getter/tree/master/image_size_getter_http_input).
 
+In addition, if your picture has verification, for example, you need to use the request header to access it, or you need a post request to get it, you need to customize input.
+
 ### Custom Decoder
 
 Such as bmp decoder
