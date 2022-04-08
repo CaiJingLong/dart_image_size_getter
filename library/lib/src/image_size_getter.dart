@@ -13,6 +13,10 @@ class _DecoderContainer extends IterableBase<BaseDecoder> {
 
   final Map<String, BaseDecoder> _decoders = {};
 
+  void registerDecoder(BaseDecoder decoder) {
+    _decoders[decoder.decoderName] = decoder;
+  }
+
   @override
   Iterator<BaseDecoder> get iterator => _decoders.values.iterator;
 }
@@ -26,6 +30,10 @@ final _decoders = _DecoderContainer([
 ]);
 
 class ImageSizeGetter {
+  static void registerDecoder(BaseDecoder decoder) {
+    _decoders.registerDecoder(decoder);
+  }
+
   static bool isPng(ImageInput input) {
     return PngDecoder().isValid(input);
   }

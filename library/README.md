@@ -133,6 +133,20 @@ assert(decoder.isValid(input));
 expect(decoder.getSize(input), Size(256, 256));
 ```
 
+#### Register custom decoder to image size getter
+
+```dart
+ImageSizeGetter.registerDecoder(const BmpDecoder());
+```
+
+The method can also be used to replace the default decoder.
+
+For example, you think the existing JPEG format is not rigorous enough.
+
+```dart
+ImageSizeGetter.registerDecoder(const MyJpegDecoder());
+```
+
 ## migrate
 
 See [migrate](https://github.com/CaiJingLong/dart_image_size_getter/blob/master/library/migrate.md)
