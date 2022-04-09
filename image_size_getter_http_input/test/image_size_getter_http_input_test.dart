@@ -43,7 +43,7 @@ Future<void> main() async {
     test('Test get size', () async {
       final width = 2554;
       final height = 824;
-      final size = await AsyncImageSizeGetter.getSize(input);
+      final size = await ImageSizeGetter.getSizeAsync(input);
 
       expect(size.width, width);
       expect(size.height, height);

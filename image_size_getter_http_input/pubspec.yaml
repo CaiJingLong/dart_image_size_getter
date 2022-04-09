@@ -8,11 +8,10 @@ environment:
   sdk: ">=2.16.2 <3.0.0"
 
 dependencies:
-  # image_size_getter: ^1.1.0
   http: ^0.13.4
-  # image_size_getter:
-  #   path: ../library
-  image_size_getter: ^1.1.0
+  image_size_getter:
+    path: ../library
+  # image_size_getter: ^1.1.0
 #   path: ^1.8.0
 
 dev_dependencies:

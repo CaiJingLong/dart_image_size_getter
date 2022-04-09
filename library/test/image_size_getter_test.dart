@@ -5,46 +5,100 @@ import 'package:image_size_getter/image_size_getter.dart';
 import 'package:test/test.dart';
 
 void main() {
-  test('Test webp size', () async {
-    final file = File('../example/asset/demo.webp');
-    final size = ImageSizeGetter.getSize(FileInput(file));
-    print('size = $size');
-    await expectLater(size, Size(988, 466));
+  group('Test decoders', () {
+    test('Test gif decoder', () {
+      final gif = File('../example/asset/dialog.gif');
+
+      const GifDecoder decoder = GifDecoder();
+      final input = FileInput(gif);
+
+      assert(decoder.isValid(input));
+      expect(decoder.getSize(input), Size(688, 1326));
+    });
+
+    test('Test jpeg decoder', () {
+      final jpeg = File('../example/asset/IMG_20180908_080245.jpg');
+
+      const JpegDecoder decoder = JpegDecoder();
+      final input = FileInput(jpeg);
+
+      assert(decoder.isValid(input));
+      expect(decoder.getSize(input), Size(4032, 3024));
+    });
+
+    test('Test png decoder', () {
+      final png = File('../example/asset/ic_launcher.png');
+
+      const PngDecoder decoder = PngDecoder();
+      final input = FileInput(png);
+
+      assert(decoder.isValid(input));
+      expect(decoder.getSize(input), Size(96, 96));
+    });
+
+    test('Test webp decoder', () {
+      final webp = File('../example/asset/demo.webp');
+
+      const WebpDecoder decoder = WebpDecoder();
+      final input = FileInput(webp);
+
+      assert(decoder.isValid(input));
+      expect(decoder.getSize(input), Size(988, 466));
+    });
+
+    test('Test bmp decoder', () {
+      final bmp = File('../example/asset/demo.bmp');
+
+      const BmpDecoder decoder = BmpDecoder();
+      final input = FileInput(bmp);
+
+      assert(decoder.isValid(input));
+      expect(decoder.getSize(input), Size(256, 256));
+    });
   });
 
-  test('Test webp extended format size', () async {
-    final file = File('../example/asset/demo_extended.webp');
-    final size = ImageSizeGetter.getSize(FileInput(file));
-    print('size = $size');
-    await expectLater(size, Size(988, 466));
-  });
+  group('Test get size.', () {
+    test('Test webp size', () async {
+      final file = File('../example/asset/demo.webp');
+      final size = ImageSizeGetter.getSize(FileInput(file));
+      print('size = $size');
+      await expectLater(size, Size(988, 466));
+    });
 
-  test('Test jpeg size', () async {
-    final file = File('../example/asset/IMG_20180908_080245.jpg');
-    final size = ImageSizeGetter.getSize(FileInput(file));
-    print('size = $size');
-    await expectLater(size, Size(4032, 3024));
-  });
+    test('Test webp extended format size', () async {
+      final file = File('../example/asset/demo_extended.webp');
+      final size = ImageSizeGetter.getSize(FileInput(file));
+      print('size = $size');
+      await expectLater(size, Size(988, 466));
+    });
 
-  test('Test gif size', () async {
-    final file = File('../example/asset/dialog.gif');
-    final size = ImageSizeGetter.getSize(FileInput(file));
-    print('size = $size');
-    await expectLater(size, Size(688, 1326));
-  });
+    test('Test jpeg size', () async {
+      final file = File('../example/asset/IMG_20180908_080245.jpg');
+      final size = ImageSizeGetter.getSize(FileInput(file));
+      print('size = $size');
+      await expectLater(size, Size(4032, 3024));
+    });
 
-  test('Test png size', () async {
-    final file = File('../example/asset/ic_launcher.png');
-    final size = ImageSizeGetter.getSize(FileInput(file));
-    print('size = $size');
-    await expectLater(size, Size(96, 96));
-  });
+    test('Test gif size', () async {
+      final file = File('../example/asset/dialog.gif');
+      final size = ImageSizeGetter.getSize(FileInput(file));
+      print('size = $size');
+      await expectLater(size, Size(688, 1326));
+    });
 
-  test('Test png size with memory', () async {
-    final file = File('../example/asset/ic_launcher.png');
-    final bytes = file.readAsBytesSync();
-    final size = ImageSizeGetter.getSize(MemoryInput(bytes));
-    print('size = $size');
-    await expectLater(size, Size(96, 96));
+    test('Test png size', () async {
+      final file = File('../example/asset/ic_launcher.png');
+      final size = ImageSizeGetter.getSize(FileInput(file));
+      print('size = $size');
+      await expectLater(size, Size(96, 96));
+    });
+
+    test('Test png size with memory', () async {
+      final file = File('../example/asset/ic_launcher.png');
+      final bytes = file.readAsBytesSync();
+      final size = ImageSizeGetter.getSize(MemoryInput(bytes));
+      print('size = $size');
+      await expectLater(size, Size(96, 96));
+    });
   });
 }
