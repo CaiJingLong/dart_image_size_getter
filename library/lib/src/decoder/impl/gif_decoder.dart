@@ -1,6 +1,12 @@
 import 'package:image_size_getter/image_size_getter.dart';
 
+/// {@template image_size_getter.GifDecoder}
+///
+/// [GifDecoder] is a class for decoding gif image.
+///
+/// {@endtemplate}
 class GifDecoder extends BaseDecoder with SimpleTypeValidator {
+  /// {@macro image_size_getter.GifDecoder}
   const GifDecoder();
 
   String get decoderName => 'gif';

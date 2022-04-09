@@ -1,18 +1,30 @@
 import 'package:hashcodes/hashcodes.dart';
 
+/// {@template image_size_getter.Size}
+///
+/// [Size] is a class for image size.
+///
+/// The size contains [width] and [height].
+///
+/// {@endtemplate}
 class Size {
-  int width;
-  int height;
+  const Size(this.width, this.height);
 
+  /// The width of the media.
+  final int width;
+
+  /// The height of the media.
+  final int height;
+
+  /// The [width] is zero and [height] is zero.
   static Size zero = Size(0, 0);
-
-  Size(this.width, this.height);
 
   @override
   String toString() {
     return "Size( $width, $height )";
   }
 
+  @override
   bool operator ==(Object? obj) {
     if (identical(obj, this)) {
       return true;

@@ -1,6 +1,12 @@
 import 'package:image_size_getter/image_size_getter.dart';
 
+/// {@template image_size_getter.PngDecoder}
+///
+/// [PngDecoder] is a class for decoding PNG image.
+///
+/// {@endtemplate}
 class PngDecoder extends BaseDecoder with SimpleTypeValidator {
+  /// {@macro image_size_getter.PngDecoder}
   const PngDecoder();
 
   @override

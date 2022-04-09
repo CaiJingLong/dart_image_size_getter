@@ -5,7 +5,9 @@ import 'package:image_size_getter/src/utils/file_utils.dart';
 
 ///
 /// {@template image_size_getter.file_input}
+///
 /// [ImageInput] using file as input source.
+///
 /// {@endtemplate}
 ///
 class FileInput extends ImageInput {

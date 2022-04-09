@@ -1,7 +1,13 @@
 import 'package:collection/collection.dart';
 import 'package:image_size_getter/image_size_getter.dart';
 
+/// {@template image_size_getter.WebpDecoder}
+///
+/// [WebpDecoder] is a class for decoding webp image.
+///
+/// {@endtemplate}
 class WebpDecoder extends BaseDecoder {
+  /// {@macro image_size_getter.WebpDecoder}
   const WebpDecoder();
 
   @override

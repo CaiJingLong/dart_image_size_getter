@@ -1,7 +1,13 @@
 import 'package:image_size_getter/image_size_getter.dart';
 import 'package:image_size_getter/src/entity/block_entity.dart';
 
+/// {@template image_size_getter.JpegDecoder}
+///
+/// [JpegDecoder] is a class for decoding JPEG image.
+///
+/// {@endtemplate}
 class JpegDecoder extends BaseDecoder with SimpleTypeValidator {
+  /// {@macro image_size_getter.JpegDecoder}
   const JpegDecoder();
 
   @override

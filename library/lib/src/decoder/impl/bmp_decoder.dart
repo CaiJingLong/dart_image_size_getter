@@ -1,6 +1,12 @@
 import 'package:image_size_getter/image_size_getter.dart';
 
+/// {@template image_size_getter.BmpDecoder}
+///
+/// [BmpDecoder] is a class for decoding BMP file.
+///
+/// {@endtemplate}
 class BmpDecoder extends BaseDecoder {
+  /// {@macro image_size_getter.BmpDecoder}
   const BmpDecoder();
 
   @override

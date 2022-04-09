@@ -1,9 +1,15 @@
+/// The block of jpeg format.
 class BlockEntity {
-  int type;
-  int length;
-
+  /// The block of jpeg format.
   BlockEntity(this.type, this.length);
 
+  /// The type of the block.
+  int type;
+
+  /// The length of the block.
+  int length;
+
+  /// Error block.
   static BlockEntity error = BlockEntity(-1, -1);
 
   @override
