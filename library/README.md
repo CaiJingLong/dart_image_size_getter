@@ -149,6 +149,34 @@ For example, you think the existing JPEG format is not rigorous enough.
 ImageSizeGetter.registerDecoder(const MyJpegDecoder());
 ```
 
+#### Use decoder alone
+
+Each decoder can be used alone.
+
+```dart
+void decodeWithImageInput(ImageInput input) {
+  BaseDecoder decoder = const GifDecoder();
+  final isGif = decoder.isValid(input);
+  print('isGif: $isGif');
+
+  if (isGif) {
+    final size = decoder.getSize(input);
+    print('size: $size');
+  }
+}
+
+void decodeWithAsyncImageInput(AsyncImageInput input) async {
+  BaseDecoder decoder = const PngDecoder();
+  final isPng = await decoder.isValidAsync(input);
+  print('isPng: $isPng');
+
+  if (isPng) {
+    final size = await decoder.getSizeAsync(input);
+    print('size: $size');
+  }
+}
+```
+
 ## migrate
 
 See [migrate](https://github.com/CaiJingLong/dart_image_size_getter/blob/master/library/migrate.md)

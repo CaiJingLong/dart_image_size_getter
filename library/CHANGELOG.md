@@ -14,14 +14,16 @@
 
 ## 2.0.0
 
+New feature:
+
 - Refactored the code and removed the `AsyncImageSizeGetter` class.
+- We can customize the decoder.
 
 ## 1.1.0
 
 ### What's Changed
 
 - Support webp extended format by @nkming2 in <https://github.com/CaiJingLong/dart_image_size_getter/pull/11>
-
 - Http input by @CaiJingLong in <https://github.com/CaiJingLong/dart_image_size_getter/pull/14>
 
 ### New Contributors
