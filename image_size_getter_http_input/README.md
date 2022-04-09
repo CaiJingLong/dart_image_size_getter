@@ -23,7 +23,7 @@ Future<void> foo() async{
       'https://cdn.jsdelivr.net/gh/CaiJingLong/some_asset@master/flutter_photo2.png';
   final httpInput = await HttpInput.createHttpInput(testUrl);
 
-  final size = await AsyncImageSizeGetter.getSize(httpInput);
+  final size = await ImageSizeGetter.getSizeAsync(httpInput);
   print('size: $size');
 }
 
