@@ -32,7 +32,7 @@ void main(List<String> arguments) async {
 
 ```
 
-MemoryImage
+MemoryInput
 
 ```dart
 import 'package:image_size_getter/image_size_getter.dart';
@@ -40,6 +40,18 @@ import 'package:image_size_getter/image_size_getter.dart';
 void foo(Uint8List image){
   final memoryImageSize = ImageSizeGetter.getSize(MemoryInput(image));
   print('memoryImageSize = $memoryImageSize');
+}
+```
+
+### Usage of Flutter asset
+
+**The flutter asset is not dart.io.File**, Therefore,
+you need to convert the asset of flutter to `ImageInput` as follows:
+
+```dart
+Future<ImageInput> createImageInputFromFlutterAsset(String assetKey) async {
+  final byteData = await rootBundle.load(assetKey);
+  return MemoryInput.byteBuffer(byteData.buffer);
 }
 ```
 
