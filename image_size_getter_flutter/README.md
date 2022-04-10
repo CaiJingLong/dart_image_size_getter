@@ -13,7 +13,9 @@ import 'package:image_size_getter/image_size_getter.dart';
 import 'package:image_size_getter_flutter/image_size_getter_flutter.dart';
 
 Future<Size> getAsset(String assetKey) async {
- final input = await FlutterAssetImageInput.create(assetKey);
- return ImageSizeGetter.getSizeAsync(input);
+  final input = FlutterAssetImageInput(assetKey);
+  final size = await ImageSizeGetter.getSizeAsync(input);
+  print('size: $size');
+  return size;
 }
 ```

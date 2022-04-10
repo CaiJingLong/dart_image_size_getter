@@ -45,10 +45,13 @@ void foo(Uint8List image){
 
 ### Usage of Flutter asset
 
-**The flutter asset is not dart.io.File**, Therefore,
-you need to convert the asset of flutter to `ImageInput` as follows:
+**The flutter asset is not dart.io.File**, the package is support dart sdk
+So, you need to convert the asset of flutter to `ImageInput` as follows:
 
 ```dart
+import 'package:image_size_getter/image_size_getter.dart';
+<!-- import  -->
+
 Future<ImageInput> createImageInputFromFlutterAsset(String assetKey) async {
   final byteData = await rootBundle.load(assetKey);
   return MemoryInput.byteBuffer(byteData.buffer);
