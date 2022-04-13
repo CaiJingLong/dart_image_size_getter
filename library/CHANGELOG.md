@@ -1,9 +1,11 @@
 # CHANGELOG
 
 - [CHANGELOG](#changelog)
+  - [2.1.0](#210)
+    - [What's Changed](#whats-changed)
   - [2.0.0](#200)
   - [1.1.0](#110)
-    - [What's Changed](#whats-changed)
+    - [What's Changed](#whats-changed-1)
     - [New Contributors](#new-contributors)
   - [1.0.0](#100)
   - [0.3.0](#030)
@@ -11,6 +13,18 @@
   - [0.2.0](#020)
   - [0.1.1](#011)
   - [0.1.0](#010)
+
+## 2.1.0
+
+Feature:
+
+- Add `needRotate` for `Size`
+
+### What's Changed
+
+- Add needRotate for Size by @CaiJingLong in <https://github.com/CaiJingLong/dart_image_size_getter/pull/20>
+
+**Full Changelog**: <https://github.com/CaiJingLong/dart_image_size_getter/compare/http_input-2.0.0...library-2.1.0>
 
 ## 2.0.0
 

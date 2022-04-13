@@ -6,6 +6,8 @@ Just support jpeg, gif, png, webp, bmp.
 
 ## Usage
 
+### Image of File
+
 ```dart
 import 'dart:io';
 
@@ -32,7 +34,7 @@ void main(List<String> arguments) async {
 
 ```
 
-MemoryImage
+### Image of Memory
 
 ```dart
 import 'package:image_size_getter/image_size_getter.dart';
@@ -43,11 +45,37 @@ void foo(Uint8List image){
 }
 ```
 
+### Image of Http
+
+See [HttpInput][].
+
+## About Size
+
+The size contains width and height.
+
+But some image have orientation.
+Such as jpeg, when the orientation of exif is 5, 6, 7 or 8, the width and height will be swapped.
+
+We can use next code to get width and height.
+
+```dart
+void foo(File file) {
+  final size = ImageSizeGetter.getSize(FileInput(file));
+  if (size.needRotate) {
+    final width = size.height;
+    final height = size.width;
+    print('width = $width, height = $height');
+  } else {
+    print('width = ${size.width}, height = ${size.height}');
+  }
+}
+```
+
 ## AsyncImageInput
 
 If your data source is read asynchronously, consider using `AsyncImageInput`.
 
-A typical use case is [http_input](https://pub.dev/packages/image_size_getter_http_input).
+A typical use case is [http_input][HttpInput].
 
 ## Custom
 
@@ -195,3 +223,5 @@ print('memoryImageSize = $memoryImageSize');
 ## LICENSE
 
 Apache 2.0
+
+[HttpInput]: https://pub.dev/packages/image_size_getter_http_input
