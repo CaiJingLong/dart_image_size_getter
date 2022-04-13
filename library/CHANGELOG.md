@@ -2,11 +2,8 @@
 
 - [CHANGELOG](#changelog)
   - [2.1.0](#210)
-    - [What's Changed](#whats-changed)
   - [2.0.0](#200)
   - [1.1.0](#110)
-    - [What's Changed](#whats-changed-1)
-    - [New Contributors](#new-contributors)
   - [1.0.0](#100)
   - [0.3.0](#030)
   - [0.2.1](#021)
@@ -20,9 +17,7 @@ Feature:
 
 - Add `needRotate` for `Size`
 
-### What's Changed
-
-- Add needRotate for Size by @CaiJingLong in <https://github.com/CaiJingLong/dart_image_size_getter/pull/20>
+**What's Changed:** - Add needRotate for Size by @CaiJingLong in <https://github.com/CaiJingLong/dart_image_size_getter/pull/20>
 
 **Full Changelog**: <https://github.com/CaiJingLong/dart_image_size_getter/compare/http_input-2.0.0...library-2.1.0>
 
@@ -35,16 +30,12 @@ New feature:
 
 ## 1.1.0
 
-### What's Changed
-
 - Support webp extended format by @nkming2 in <https://github.com/CaiJingLong/dart_image_size_getter/pull/11>
 - Http input by @CaiJingLong in <https://github.com/CaiJingLong/dart_image_size_getter/pull/14>
 
-### New Contributors
+**New Contributors:** - @nkming2 made their first contribution in <https://github.com/CaiJingLong/dart_image_size_getter/pull/11>
 
-- @nkming2 made their first contribution in <https://github.com/CaiJingLong/dart_image_size_getter/pull/11>
-
-**Full Changelog**: <https://github.com/CaiJingLong/dart_image_size_getter/compare/1.0.0...1.1.0>
+**Full Changelog:** <https://github.com/CaiJingLong/dart_image_size_getter/compare/1.0.0...1.1.0>
 
 ## 1.0.0
 
