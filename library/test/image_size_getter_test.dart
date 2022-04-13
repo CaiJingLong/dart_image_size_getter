@@ -55,6 +55,23 @@ void main() {
       assert(decoder.isValid(input));
       expect(decoder.getSize(input), Size(256, 256));
     });
+
+    test('Test have orientation jpeg', () {
+      final orientation3 = File('../example/asset/have_orientation_exif_3.jpg');
+
+      const JpegDecoder decoder = JpegDecoder();
+      final input = FileInput(orientation3);
+
+      assert(decoder.isValid(input));
+      expect(decoder.getSize(input), Size(533, 799));
+
+      final orientation6 = File('../example/asset/have_orientation_exif_6.jpg');
+      final input2 = FileInput(orientation6);
+
+      assert(decoder.isValid(input2));
+      final size = decoder.getSize(input2);
+      expect(size, Size(3264, 2448, needRotate: true));
+    });
   });
 
   group('Test get size.', () {

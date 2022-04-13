@@ -44,7 +44,7 @@ class Size {
 
   @override
   String toString() {
-    return "Size( $width, $height )";
+    return "Size( $width, $height, needRotate: $needRotate )";
   }
 
   @override
@@ -58,8 +58,11 @@ class Size {
     }
 
     if (obj is Size) {
-      return width == obj.width && height == obj.height;
+      return width == obj.width &&
+          height == obj.height &&
+          needRotate == obj.needRotate;
     }
+
     return false;
   }
 
