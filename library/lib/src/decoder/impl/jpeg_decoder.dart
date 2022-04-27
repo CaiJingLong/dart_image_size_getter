@@ -36,7 +36,6 @@ class JpegDecoder extends BaseDecoder with SimpleTypeValidator {
         final exifOrientation = _getOrientation(app1BlockData);
         if (exifOrientation != null) {
           orientation = exifOrientation;
-          print('Orientation: $orientation');
         }
       }
 
@@ -78,14 +77,13 @@ class JpegDecoder extends BaseDecoder with SimpleTypeValidator {
         final exifOrientation = _getOrientation(app1BlockData);
         if (exifOrientation != null) {
           orientation = exifOrientation;
-          print('Orientation: $orientation');
         }
       }
 
       if (block.type == 0xC0 || block.type == 0xC2) {
         final widthList = await input.getRange(start + 7, start + 9);
         final heightList = await input.getRange(start + 5, start + 7);
-        final orientation = (await input.getRange(start + 9, start + 10))[0];
+        orientation = (await input.getRange(start + 9, start + 10))[0];
         return _getSize(widthList, heightList, orientation);
       } else {
         start += block.length;
