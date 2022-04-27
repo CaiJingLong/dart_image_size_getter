@@ -1,6 +1,7 @@
 # CHANGELOG
 
 - [CHANGELOG](#changelog)
+  - [2.1.1](#211)
   - [2.1.0](#210)
   - [2.0.0](#200)
   - [1.1.0](#110)
@@ -10,6 +11,13 @@
   - [0.2.0](#020)
   - [0.1.1](#011)
   - [0.1.0](#010)
+
+## 2.1.1
+
+- fix: remove debug value print calls from `jpeg_decoder` by @ZaLiTHkA in <https://github.com/CaiJingLong/dart_image_size_getter/pull/21>
+- @ZaLiTHkA made their first contribution in <https://github.com/CaiJingLong/dart_image_size_getter/pull/21>
+
+**Full Changelog**: <https://github.com/CaiJingLong/dart_image_size_getter/compare/library-2.1.0...library-2.1.1>
 
 ## 2.1.0
 
