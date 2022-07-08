@@ -128,3 +128,78 @@ mixin SimpleFileHeaderAndFooter {
   /// The end bytes of the file.
   List<int> get endBytes;
 }
+
+/// The content have multiple headers or footers.
+mixin MutilFileHeaderAndFooter {
+  /// When the [mutipleStartBytes] is true, this is the start bytes of the file.
+  List<List<int>> get mutipleStartBytesList;
+
+  /// When the [mutipleEndBytes] is true, this is the end bytes of the file.
+  List<List<int>> get mutipleEndBytesList;
+}
+
+/// Validate the content.
+mixin MutilFileHeaderAndFooterValidator on BaseDecoder {
+  /// {@macro image_size_getter.SimpleFileHeaderAndFooter}
+  MutilFileHeaderAndFooter get headerAndFooter;
+
+  @override
+  Future<bool> isValidAsync(AsyncImageInput input) async {
+    final length = await input.length;
+
+    for (final header in headerAndFooter.mutipleStartBytesList) {
+      for (final footer in headerAndFooter.mutipleEndBytesList) {
+        final fileHeader = await input.getRange(
+          0,
+          header.length,
+        );
+        final fileFooter = await input.getRange(
+          length - footer.length,
+          length,
+        );
+
+        final headerEquals = compareTwoList(
+          header,
+          fileHeader,
+        );
+        final footerEquals = compareTwoList(
+          footer,
+          fileFooter,
+        );
+        return headerEquals && footerEquals;
+      }
+    }
+
+    return false;
+  }
+
+  @override
+  bool isValid(ImageInput input) {
+    final length = input.length;
+
+    for (final header in headerAndFooter.mutipleStartBytesList) {
+      for (final footer in headerAndFooter.mutipleEndBytesList) {
+        final fileHeader = input.getRange(
+          0,
+          header.length,
+        );
+        final fileFooter = input.getRange(
+          length - footer.length,
+          length,
+        );
+
+        final headerEquals = compareTwoList(
+          header,
+          fileHeader,
+        );
+        final footerEquals = compareTwoList(
+          footer,
+          fileFooter,
+        );
+        return headerEquals && footerEquals;
+      }
+    }
+
+    return false;
+  }
+}
