@@ -166,7 +166,9 @@ mixin MutilFileHeaderAndFooterValidator on BaseDecoder {
           footer,
           fileFooter,
         );
-        return headerEquals && footerEquals;
+        if (headerEquals && footerEquals) {
+          return true;
+        }
       }
     }
 
@@ -196,7 +198,9 @@ mixin MutilFileHeaderAndFooterValidator on BaseDecoder {
           footer,
           fileFooter,
         );
-        return headerEquals && footerEquals;
+        if (headerEquals && footerEquals) {
+          return true;
+        }
       }
     }
 

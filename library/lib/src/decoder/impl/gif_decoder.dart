@@ -44,7 +44,7 @@ class _GifInfo with MutilFileHeaderAndFooter {
     0x49,
     0x46,
     0x38,
-    0x39,
+    0x37,
     0x61,
   ];
   static const start87a = [
