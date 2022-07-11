@@ -5,7 +5,7 @@ import 'package:image_size_getter/image_size_getter.dart';
 /// [GifDecoder] is a class for decoding gif image.
 ///
 /// {@endtemplate}
-class GifDecoder extends BaseDecoder with SimpleTypeValidator {
+class GifDecoder extends BaseDecoder with MutilFileHeaderAndFooterValidator {
   /// {@macro image_size_getter.GifDecoder}
   const GifDecoder();
 
@@ -35,11 +35,19 @@ class GifDecoder extends BaseDecoder with SimpleTypeValidator {
   }
 
   @override
-  SimpleFileHeaderAndFooter get simpleFileHeaderAndFooter => _GifInfo();
+  MutilFileHeaderAndFooter get headerAndFooter => _GifInfo();
 }
 
-class _GifInfo with SimpleFileHeaderAndFooter {
-  static const start = [
+class _GifInfo with MutilFileHeaderAndFooter {
+  static const start89a = [
+    0x47,
+    0x49,
+    0x46,
+    0x38,
+    0x37,
+    0x61,
+  ];
+  static const start87a = [
     0x47,
     0x49,
     0x46,
@@ -51,8 +59,11 @@ class _GifInfo with SimpleFileHeaderAndFooter {
   static const end = [0x3B];
 
   @override
-  List<int> get endBytes => end;
+  List<List<int>> get mutipleEndBytesList => [end];
 
   @override
-  List<int> get startBytes => start;
+  List<List<int>> get mutipleStartBytesList => [
+        start87a,
+        start89a,
+      ];
 }

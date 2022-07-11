@@ -96,11 +96,20 @@ void main() {
       await expectLater(size, Size(4032, 3024));
     });
 
-    test('Test gif size', () async {
-      final file = File('../example/asset/dialog.gif');
-      final size = ImageSizeGetter.getSize(FileInput(file));
-      print('size = $size');
-      await expectLater(size, Size(688, 1326));
+    group('Test gif size', () {
+      test('89a', () async {
+        final file = File('../example/asset/dialog.gif');
+        final size = ImageSizeGetter.getSize(FileInput(file));
+        print('size = $size');
+        await expectLater(size, Size(688, 1326));
+      });
+
+      test('87a', () async {
+        final file = File('../example/asset/87a.gif');
+        final size = ImageSizeGetter.getSize(FileInput(file));
+        print('size = $size');
+        await expectLater(size, Size(200, 150));
+      });
     });
 
     test('Test png size', () async {
