@@ -9,7 +9,7 @@ environment:
 
 dependencies:
   image_size_getter: ^2.0.0
-  bmff: ^1.2.0
+  bmff: ^1.4.2
 
 dev_dependencies:
   lints: ^1.0.0
