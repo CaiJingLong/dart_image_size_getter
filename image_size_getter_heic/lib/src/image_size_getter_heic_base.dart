@@ -1,8 +1,9 @@
 import 'dart:typed_data';
 
-import 'package:image_size_getter_bmff/image_size_getter_bmff.dart';
 import 'package:image_size_getter_heic/image_size_getter_heic.dart';
 import 'package:bmff/bmff.dart';
+
+import 'context.dart';
 
 class HeicDecoder extends BaseDecoder {
   @override
@@ -20,8 +21,27 @@ class HeicDecoder extends BaseDecoder {
   }
 
   @override
-  Future<Size> getSizeAsync(AsyncImageInput input) {
-    throw UnimplementedError();
+  Future<Size> getSizeAsync(AsyncImageInput input) async {
+    MemoryAsyncBmffContext bmffContext = MemoryAsyncBmffContext(
+      () {
+        return input.length;
+      },
+      (start, end) => input.getRange(start, end),
+    );
+
+    final bmff = await Bmff.asyncContext(bmffContext);
+    final iprp = bmff['meta']['iprp'];
+    final ispe = await iprp.updateForceFullBox(false).then((value) async {
+      final ipco = iprp['ipco'];
+      await ipco.init();
+      return ipco;
+    }).then((value) => value['ispe']);
+    final buffer = await ispe.getByteBuffer();
+
+    final width = buffer.getUint32(1, Endian.big);
+    final height = buffer.getUint32(2, Endian.big);
+
+    return Size(width, height);
   }
 
   @override
@@ -43,5 +63,15 @@ class HeicDecoder extends BaseDecoder {
     final typeBox = bmff.typeBox;
     final compatibleBrands = typeBox.compatibleBrands;
     return compatibleBrands.contains('heic');
+  }
+}
+
+extension on AsyncBmffBox {
+  AsyncBmffBox operator [](String key) {
+    final matched = childBoxes.where((element) => element.type == key);
+    if (matched.isEmpty) {
+      throw Exception('Not found $key');
+    }
+    return matched.first;
   }
 }

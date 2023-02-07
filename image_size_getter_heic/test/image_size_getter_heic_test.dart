@@ -15,4 +15,15 @@ void main() {
       expect(decoder.isValidAsync(asyncInput), completion(equals(true)));
     });
   });
+
+  test('Test get heic size', () async {
+    final decoder = HeicDecoder();
+    ImageSizeGetter.registerDecoder(decoder);
+    final input = FileInput(File('example/asset/example.heic'));
+    expect(decoder.getSize(input), equals(Size(1440, 960)));
+
+    final asyncInput = AsyncImageInput.input(input);
+    final size = await decoder.getSizeAsync(asyncInput);
+    expect(size, equals(Size(1440, 960)));
+  });
 }
