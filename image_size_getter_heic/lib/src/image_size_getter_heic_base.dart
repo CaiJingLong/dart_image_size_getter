@@ -17,10 +17,24 @@ class HeicDecoder extends BaseDecoder {
   @override
   Size getSize(ImageInput input) {
     final bmff = BmffImageContext(input, fullBoxTypes: fullTypeBox).bmff;
-    final buffer = bmff['meta']['iprp']['ipco']['ispe'].getByteBuffer();
+    final ipcoBox = bmff['meta']['iprp']['ipco'];
 
-    final width = buffer.getUint32(0, Endian.big);
-    final height = buffer.getUint32(1, Endian.big);
+    int width = 0;
+    int height = 0;
+
+    for (final childBox in ipcoBox.childBoxes) {
+      if (childBox.type != 'ispe') {
+        continue;
+      }
+
+      final buffer = childBox.getByteBuffer();
+      final boxWidth = buffer.getUint32(0, Endian.big);
+      final boxHeight = buffer.getUint32(1, Endian.big);
+      if (boxWidth * boxHeight > width * height) {
+        width = boxWidth;
+        height = boxHeight;
+      }
+    }
 
     return Size(width, height);
   }
