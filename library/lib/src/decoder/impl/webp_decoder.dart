@@ -20,6 +20,9 @@ class WebpDecoder extends BaseDecoder {
       final widthList = input.getRange(0x18, 0x1b);
       final heightList = input.getRange(0x1b, 0x1d);
       return _createExtendedFormatSize(widthList, heightList);
+    } else if (_isLosslessFormat(chunkHeader)) {
+      final sizeList = input.getRange(0x15, 0x19);
+      return _createLosslessFormatSize(sizeList);
     } else {
       final widthList = input.getRange(0x1a, 0x1c);
       final heightList = input.getRange(0x1c, 0x1e);
@@ -39,8 +42,26 @@ class WebpDecoder extends BaseDecoder {
     return Size(width, height);
   }
 
+  Size _createLosslessFormatSize(List<int> sizeList) {
+    final bits = sizeList
+        .map(
+          (i) => i.toRadixString(2).split('').reversed.join().padRight(8, '0'),
+        )
+        .join()
+        .split('');
+    final width =
+        (int.tryParse(bits.sublist(0, 14).reversed.join(), radix: 2) ?? 0) + 1;
+    final height =
+        (int.tryParse(bits.sublist(14, 28).reversed.join(), radix: 2) ?? 0) + 1;
+    return Size(width, height);
+  }
+
   bool _isExtendedFormat(List<int> chunkHeader) {
     return ListEquality().equals(chunkHeader, "VP8X".codeUnits);
+  }
+
+  bool _isLosslessFormat(List<int> chunkHeader) {
+    return ListEquality().equals(chunkHeader, "VP8L".codeUnits);
   }
 
   @override
@@ -50,6 +71,9 @@ class WebpDecoder extends BaseDecoder {
       final widthList = await input.getRange(0x18, 0x1b);
       final heightList = await input.getRange(0x1b, 0x1d);
       return _createExtendedFormatSize(widthList, heightList);
+    } else if (_isLosslessFormat(chunkHeader)) {
+      final sizeList = await input.getRange(0x15, 0x19);
+      return _createLosslessFormatSize(sizeList);
     } else {
       final widthList = await input.getRange(0x1a, 0x1c);
       final heightList = await input.getRange(0x1c, 0x1e);
