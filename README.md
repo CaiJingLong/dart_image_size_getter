@@ -1,1 +1,1 @@
-library/README.md
+packages/image_size_getter/README.md

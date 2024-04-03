@@ -154,7 +154,7 @@ class BmpDecoder extends BaseDecoder {
 Use it:
 
 ```dart
-final bmp = File('../example/asset/demo.bmp');
+final bmp = File('../../example/asset/demo.bmp');
 
 const BmpDecoder decoder = BmpDecoder();
 final input = FileInput(bmp);

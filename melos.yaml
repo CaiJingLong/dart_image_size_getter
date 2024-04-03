@@ -1,0 +1,10 @@
+name: image_size_getter_project_workspaces
+
+packages:
+  - example/
+  - packages/**
+
+scripts:
+  test:
+    exec: |
+      dart test
