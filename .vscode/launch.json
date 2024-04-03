@@ -9,12 +9,6 @@
             "cwd": "example",
             "request": "launch",
             "type": "dart"
-        },
-        {
-            "name": "library",
-            "cwd": "library",
-            "request": "launch",
-            "type": "dart"
         }
     ]
 }
