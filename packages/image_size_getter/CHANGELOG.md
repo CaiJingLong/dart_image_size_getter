@@ -1,6 +1,7 @@
 # CHANGELOG
 
 - [CHANGELOG](#changelog)
+  - [2.1.3](#213)
   - [2.1.2](#212)
   - [2.1.1](#211)
   - [2.1.0](#210)
@@ -12,6 +13,12 @@
   - [0.2.0](#020)
   - [0.1.1](#011)
   - [0.1.0](#010)
+
+## 2.1.3
+
+Fix:
+
+- Support lossless WebP ([#38](https://github.com/CaiJingLong/dart_image_size_getter/issues/38))
 
 ## 2.1.2
 
