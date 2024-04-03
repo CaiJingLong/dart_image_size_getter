@@ -1,14 +1,14 @@
 name: image_size_getter_http_input
 description: A http input for image_size_getter.
-version: 2.0.0
+version: 2.0.1
 homepage: https://github.com/CaiJingLong/dart_image_size_getter/tree/master/image_size_getter_http_input
 # publish_to: https://pub.dev/
 
 environment:
-  sdk: ">=2.16.2 <3.0.0"
+  sdk: ">=2.12.0 <4.0.0"
 
 dependencies:
-  http: ^0.13.4
+  http: ^1.0.0
   # image_size_getter:
   #   path: ../library
   image_size_getter: ^2.0.0
