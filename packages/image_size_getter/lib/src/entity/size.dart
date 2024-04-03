@@ -48,13 +48,9 @@ class Size {
   }
 
   @override
-  bool operator ==(Object? obj) {
+  bool operator ==(Object obj) {
     if (identical(obj, this)) {
       return true;
-    }
-
-    if (obj == null) {
-      return false;
     }
 
     if (obj is Size) {

@@ -25,7 +25,7 @@ abstract class ImageInput {
   bool exists();
 }
 
-/// {@macro image_size_getter.HaveResourceImageInput}
+/// {@template image_size_getter.HaveResourceImageInput}
 ///
 /// There are resources in these classes that need to be released.
 ///
@@ -112,7 +112,7 @@ abstract class AsyncImageInput {
   Future<bool> exists();
 }
 
-/// {@macro image_size_getter.SyncImageInput}
+/// {@template image_size_getter.SyncImageInput}
 ///
 /// Just wrap [ImageInput] to make it asynchronous.
 ///

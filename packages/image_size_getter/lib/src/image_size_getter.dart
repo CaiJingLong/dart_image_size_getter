@@ -65,7 +65,7 @@ final _decoders = _DecoderContainer([
 /// }
 /// ```
 ///
-/// {endtemplate}
+/// {@endtemplate}
 class ImageSizeGetter {
   /// {@macro image_size_getter._DecoderContainer.register}
   static void registerDecoder(BaseDecoder decoder) {

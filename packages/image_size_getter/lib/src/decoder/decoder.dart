@@ -9,7 +9,7 @@ import 'package:image_size_getter/image_size_getter.dart';
 ///
 /// {@endtemplate}
 abstract class BaseDecoder {
-  /// {@template image_size_getter.BaseDecoder}
+  /// {@macro image_size_getter.BaseDecoder}
   const BaseDecoder();
 
   /// The name of the decoder.
