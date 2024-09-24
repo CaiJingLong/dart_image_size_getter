@@ -205,7 +205,7 @@ class JpegDecoder extends BaseDecoder with SimpleTypeValidator {
 
 class _JpegInfo with SimpleFileHeaderAndFooter {
   static const start = [0xFF, 0xD8];
-  static const end = [0xFF, 0xD9];
+  static const end = <int>[];
 
   @override
   List<int> get endBytes => end;
