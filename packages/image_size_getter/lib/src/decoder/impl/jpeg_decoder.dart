@@ -9,10 +9,13 @@ import 'package:image_size_getter/src/entity/block_entity.dart';
 /// {@endtemplate}
 class JpegDecoder extends BaseDecoder with SimpleTypeValidator {
   /// {@macro image_size_getter.JpegDecoder}
-  const JpegDecoder();
+  const JpegDecoder({
+    this.isStandardJpeg = true,
+  });
 
+  final bool isStandardJpeg;
   @override
-  String get decoderName => 'jpeg';
+  String get decoderName => isStandardJpeg ? 'jpeg' : 'non-standard-jpeg';
 
   @override
   Size getSize(ImageInput input) {
@@ -138,7 +141,8 @@ class JpegDecoder extends BaseDecoder with SimpleTypeValidator {
   }
 
   @override
-  SimpleFileHeaderAndFooter get simpleFileHeaderAndFooter => _JpegInfo();
+  SimpleFileHeaderAndFooter get simpleFileHeaderAndFooter =>
+      isStandardJpeg ? _JpegInfo() : _NonStandardJpegInfo();
 
   int? _getOrientation(List<int> app1blockData) {
     // About EXIF, See: https://www.media.mit.edu/pia/Research/deepview/exif.html#orientation
@@ -206,6 +210,22 @@ class JpegDecoder extends BaseDecoder with SimpleTypeValidator {
 class _JpegInfo with SimpleFileHeaderAndFooter {
   static const start = [0xFF, 0xD8];
   static const end = [0xFF, 0xD9];
+
+  @override
+  List<int> get endBytes => end;
+
+  @override
+  List<int> get startBytes => start;
+}
+
+/// Non-standard JPEG Info
+///
+/// Some mvimg files have a non-standard header.
+///
+/// The file is not end with 0xFFD9, so we need to use this to get the size.
+class _NonStandardJpegInfo with SimpleFileHeaderAndFooter {
+  static const start = [0xFF, 0xD8];
+  static const end = <int>[];
 
   @override
   List<int> get endBytes => end;

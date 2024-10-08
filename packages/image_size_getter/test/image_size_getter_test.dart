@@ -26,6 +26,18 @@ void main() {
       expect(decoder.getSize(input), Size(4032, 3024));
     });
 
+
+    test('Test non-standard jpeg decoder', () {
+      final jpeg = File('../../example/asset/test.MP.jpg');
+
+      const JpegDecoder decoder = JpegDecoder(isStandardJpeg: false);
+      final input = FileInput(jpeg);
+
+      assert(decoder.isValid(input));
+      expect(decoder.getSize(input), Size(3840, 2160, needRotate: true));
+    });
+
+
     test('Test png decoder', () {
       final png = File('../../example/asset/ic_launcher.png');
 
@@ -101,6 +113,13 @@ void main() {
       final size = ImageSizeGetter.getSize(FileInput(file));
       print('size = $size');
       await expectLater(size, Size(4032, 3024));
+    });
+
+    test('Test non-standard jpeg size', () async {
+      final file = File('../../example/asset/test.MP.jpg');
+      final size = ImageSizeGetter.getSize(FileInput(file));
+      print('size = $size');
+      await expectLater(size, Size(3840, 2160, needRotate: true));
     });
 
     group('Test gif size', () {

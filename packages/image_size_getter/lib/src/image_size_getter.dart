@@ -41,6 +41,7 @@ class _DecoderContainer extends IterableBase<BaseDecoder> {
 final _decoders = _DecoderContainer([
   const GifDecoder(),
   const JpegDecoder(),
+  const JpegDecoder(isStandardJpeg: false),
   const WebpDecoder(),
   const PngDecoder(),
   const BmpDecoder(),
