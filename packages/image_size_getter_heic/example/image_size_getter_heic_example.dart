@@ -8,7 +8,7 @@ void main() {
   ImageSizeGetter.registerDecoder(decoder);
 
   final input = FileInput(File('example/asset/example.heic'));
-  final size = ImageSizeGetter.getSize(input);
+  final size = ImageSizeGetter.getSizeResult(input);
 
-  print(size);
+  print('heic size: ${size.size} (decoded by ${size.decoder.decoderName})');
 }

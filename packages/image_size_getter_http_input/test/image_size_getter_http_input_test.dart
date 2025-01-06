@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:http/http.dart' as http;
@@ -48,6 +50,19 @@ Future<void> main() async {
       expect(size.width, width);
       expect(size.height, height);
     });
+
+    test('Test get size result', () async {
+      final width = 2554;
+      final height = 824;
+      final sizeResult = await ImageSizeGetter.getSizeResultAsync(input);
+      final size = sizeResult.size;
+
+      expect(size.width, width);
+      expect(size.height, height);
+
+      final decoder = sizeResult.decoder;
+      expect(decoder.decoderName, 'png');
+    });
   });
 
   group('Test no support range load resource:', () {
@@ -85,9 +100,11 @@ Future<void> main() async {
               assert(delegateInnerInput.file.existsSync() == true,
                   'File not exists.');
             }
-            final size = ImageSizeGetter.getSize(delegateInput);
+            final sizeResult = ImageSizeGetter.getSizeResult(delegateInput);
 
             await delegateInput.release();
+
+            final size = sizeResult.size;
 
             expect(size.width, width);
             expect(size.height, height);

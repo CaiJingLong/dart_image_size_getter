@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use_from_same_package
+
 import 'dart:io';
 
 import 'package:image_size_getter/file_input.dart';
@@ -26,7 +28,6 @@ void main() {
       expect(decoder.getSize(input), Size(4032, 3024));
     });
 
-
     test('Test non-standard jpeg decoder', () {
       final jpeg = File('../../example/asset/test.MP.jpg');
 
@@ -36,7 +37,6 @@ void main() {
       assert(decoder.isValid(input));
       expect(decoder.getSize(input), Size(3840, 2160, needRotate: true));
     });
-
 
     test('Test png decoder', () {
       final png = File('../../example/asset/ic_launcher.png');
@@ -69,7 +69,8 @@ void main() {
     });
 
     test('Test have orientation jpeg', () {
-      final orientation3 = File('../../example/asset/have_orientation_exif_3.jpg');
+      final orientation3 =
+          File('../../example/asset/have_orientation_exif_3.jpg');
 
       const JpegDecoder decoder = JpegDecoder();
       final input = FileInput(orientation3);
@@ -77,7 +78,8 @@ void main() {
       assert(decoder.isValid(input));
       expect(decoder.getSize(input), Size(533, 799));
 
-      final orientation6 = File('../../example/asset/have_orientation_exif_6.jpg');
+      final orientation6 =
+          File('../../example/asset/have_orientation_exif_6.jpg');
       final input2 = FileInput(orientation6);
 
       assert(decoder.isValid(input2));
@@ -92,6 +94,9 @@ void main() {
       final size = ImageSizeGetter.getSize(FileInput(file));
       print('size = $size');
       await expectLater(size, Size(988, 466));
+
+      final result = ImageSizeGetter.getSizeResult(FileInput(file));
+      print('size = ${result.size} (decoded by ${result.decoder.decoderName})');
     });
 
     test('Test webp extended format size', () async {
@@ -99,6 +104,9 @@ void main() {
       final size = ImageSizeGetter.getSize(FileInput(file));
       print('size = $size');
       await expectLater(size, Size(988, 466));
+
+      final result = ImageSizeGetter.getSizeResult(FileInput(file));
+      print('size = ${result.size} (decoded by ${result.decoder.decoderName})');
     });
 
     test('Test webp lossless format size', () async {
@@ -106,6 +114,9 @@ void main() {
       final size = ImageSizeGetter.getSize(FileInput(file));
       print('size = $size');
       await expectLater(size, Size(988, 466));
+
+      final result = ImageSizeGetter.getSizeResult(FileInput(file));
+      print('size = ${result.size} (decoded by ${result.decoder.decoderName})');
     });
 
     test('Test jpeg size', () async {
@@ -113,6 +124,9 @@ void main() {
       final size = ImageSizeGetter.getSize(FileInput(file));
       print('size = $size');
       await expectLater(size, Size(4032, 3024));
+
+      final result = ImageSizeGetter.getSizeResult(FileInput(file));
+      print('size = ${result.size} (decoded by ${result.decoder.decoderName})');
     });
 
     test('Test non-standard jpeg size', () async {
@@ -120,6 +134,9 @@ void main() {
       final size = ImageSizeGetter.getSize(FileInput(file));
       print('size = $size');
       await expectLater(size, Size(3840, 2160, needRotate: true));
+
+      final result = ImageSizeGetter.getSizeResult(FileInput(file));
+      print('size = ${result.size} (decoded by ${result.decoder.decoderName})');
     });
 
     group('Test gif size', () {
@@ -128,6 +145,10 @@ void main() {
         final size = ImageSizeGetter.getSize(FileInput(file));
         print('size = $size');
         await expectLater(size, Size(688, 1326));
+
+        final result = ImageSizeGetter.getSizeResult(FileInput(file));
+        print(
+            'size = ${result.size} (decoded by ${result.decoder.decoderName})');
       });
 
       test('87a', () async {
@@ -135,6 +156,10 @@ void main() {
         final size = ImageSizeGetter.getSize(FileInput(file));
         print('size = $size');
         await expectLater(size, Size(200, 150));
+
+        final result = ImageSizeGetter.getSizeResult(FileInput(file));
+        print(
+            'size = ${result.size} (decoded by ${result.decoder.decoderName})');
       });
     });
 
@@ -143,6 +168,9 @@ void main() {
       final size = ImageSizeGetter.getSize(FileInput(file));
       print('size = $size');
       await expectLater(size, Size(96, 96));
+
+      final result = ImageSizeGetter.getSizeResult(FileInput(file));
+      print('size = ${result.size} (decoded by ${result.decoder.decoderName})');
     });
 
     test('Test png size with memory', () async {
@@ -151,6 +179,9 @@ void main() {
       final size = ImageSizeGetter.getSize(MemoryInput(bytes));
       print('size = $size');
       await expectLater(size, Size(96, 96));
+
+      final result = ImageSizeGetter.getSizeResult(MemoryInput(bytes));
+      print('size = ${result.size} (decoded by ${result.decoder.decoderName})');
     });
   });
 }
