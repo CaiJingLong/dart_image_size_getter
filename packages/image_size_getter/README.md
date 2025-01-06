@@ -12,24 +12,30 @@ Just support jpeg, gif, png, webp, bmp.
 import 'dart:io';
 
 import 'package:image_size_getter/image_size_getter.dart';
-import 'package:image_size_getter/file_input.dart'; // For compatibility with flutter web.
+import 'package:image_size_getter/file_input.dart';
 
 void main(List<String> arguments) async {
   final file = File('asset/IMG_20180908_080245.jpg');
-  final size = ImageSizeGetter.getSize(FileInput(file));
-  print('jpg = $size');
+  final jpgResult = ImageSizeGetter.getSizeResult(FileInput(file));
+  print(
+      'jpg = ${jpgResult.size} (decoded by ${jpgResult.decoder.decoderName})');
 
   final pngFile = File('asset/ic_launcher.png');
-  final pngSize = ImageSizeGetter.getSize(FileInput(pngFile));
-  print('png = $pngSize');
+  final pngResult = ImageSizeGetter.getSizeResult(FileInput(pngFile));
+  print(
+      'png = ${pngResult.size} (decoded by ${pngResult.decoder.decoderName})');
 
   final webpFile = File('asset/demo.webp');
-  final webpSize = ImageSizeGetter.getSize(FileInput(webpFile));
-  print('webp = $webpSize');
+  final webpResult = ImageSizeGetter.getSizeResult(FileInput(webpFile));
+  print(
+      'webp = ${webpResult.size} (decoded by ${webpResult.decoder.decoderName})');
 
   final gifFile = File('asset/dialog.gif');
-  final gifSize = ImageSizeGetter.getSize(FileInput(gifFile));
-  print('gif = $gifSize');
+  final gifResult = ImageSizeGetter.getSizeResult(FileInput(gifFile));
+  print(
+      'gif = ${gifResult.size} (decoded by ${gifResult.decoder.decoderName})');
+
+  // errorExample();
 }
 
 ```
@@ -40,8 +46,10 @@ void main(List<String> arguments) async {
 import 'package:image_size_getter/image_size_getter.dart';
 
 void foo(Uint8List image){
-  final memoryImageSize = ImageSizeGetter.getSize(MemoryInput(image));
-  print('memoryImageSize = $memoryImageSize');
+  final memoryImageSizeResult = ImageSizeGetter.getSizeResult(MemoryInput(image));
+  final size = memoryImageSizeResult.size;
+  final decoder = memoryImageSizeResult.decoder;
+  print('size = $size, decoder = ${decoder.decoderName}');
 }
 ```
 
@@ -60,7 +68,8 @@ We can use next code to get width and height.
 
 ```dart
 void foo(File file) {
-  final size = ImageSizeGetter.getSize(FileInput(file));
+  final sizeResult = ImageSizeGetter.getSizeResult(FileInput(file));
+  final size = sizeResult.size;
   if (size.needRotate) {
     final width = size.height;
     final height = size.width;
@@ -68,6 +77,7 @@ void foo(File file) {
   } else {
     print('width = ${size.width}, height = ${size.height}');
   }
+  print('decoder = ${sizeResult.decoder.decoderName}');
 }
 ```
 
@@ -160,7 +170,7 @@ const BmpDecoder decoder = BmpDecoder();
 final input = FileInput(bmp);
 
 assert(decoder.isValid(input));
-expect(decoder.getSize(input), Size(256, 256));
+expect(decoder.getSizeResult(input).size, Size(256, 256));
 ```
 
 #### Register custom decoder to image size getter
@@ -188,7 +198,8 @@ void decodeWithImageInput(ImageInput input) {
   print('isGif: $isGif');
 
   if (isGif) {
-    final size = decoder.getSize(input);
+    final sizeResult = decoder.getSizeResult(input);
+    final size = sizeResult.size;
     print('size: $size');
   }
 }
@@ -199,7 +210,8 @@ void decodeWithAsyncImageInput(AsyncImageInput input) async {
   print('isPng: $isPng');
 
   if (isPng) {
-    final size = await decoder.getSizeAsync(input);
+    final sizeResult = await decoder.getSizeResultAsync(input);
+    final size = sizeResult.size;
     print('size: $size');
   }
 }
@@ -216,8 +228,9 @@ So, if you want to get flutter asset image size, you must convert it to memory(U
 
 ```dart
 final buffer = await rootBundle.load('assets/logo.png'); // get the byte buffer
-final memoryImageSize = ImageSizeGetter.getSize(MemoryInput.byteBuffer(buffer));
-print('memoryImageSize = $memoryImageSize');
+final memoryImageSizeResult = ImageSizeGetter.getSizeResult(MemoryInput.byteBuffer(buffer));
+final size = memoryImageSizeResult.size;
+print('size = $size');
 ```
 
 ## LICENSE

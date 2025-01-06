@@ -1,5 +1,7 @@
 import 'package:hashcodes/hashcodes.dart';
 
+import '../../image_size_getter.dart';
+
 /// {@template image_size_getter.Size}
 ///
 /// [Size] is a class for image size.
@@ -64,4 +66,29 @@ class Size {
 
   @override
   int get hashCode => hashValues(width, height);
+}
+
+/// {@template image_size_getter.SizeResult}
+///
+/// [SizeResult] is a class for image size result.
+///
+/// The result contains [size] and [decoder].
+///
+/// {@endtemplate}
+class SizeResult {
+  /// {@macro image_size_getter.SizeResult}
+  const SizeResult({
+    required this.size,
+    required this.decoder,
+  });
+
+  /// The size of the media.
+  ///
+  /// See [Size].
+  final Size size;
+
+  /// The decoder of the media.
+  ///
+  /// See [BaseDecoder].
+  final BaseDecoder decoder;
 }

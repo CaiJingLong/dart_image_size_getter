@@ -110,6 +110,8 @@ class ImageSizeGetter {
   /// If the [input] is not a valid image format, it will throw [UnsupportedError].
   ///
   /// {@endtemplate}
+  @Deprecated(
+      'Use getSizeResult instead. This method will be removed in the next major version.')
   static Size getSize(ImageInput input) {
     if (!input.exists()) {
       throw StateError('The input is not exists.');
@@ -127,6 +129,8 @@ class ImageSizeGetter {
   /// {@macro image_size_getter.getSize}
   ///
   /// The method is async.
+  @Deprecated(
+      'Use getSizeResultAsync instead. This method will be removed in the next major version.')
   static Future<Size> getSizeAsync(AsyncImageInput input) async {
     if (!await input.exists()) {
       throw StateError('The input is not exists.');
@@ -144,6 +148,52 @@ class ImageSizeGetter {
     for (var value in _decoders) {
       if (await value.isValidAsync(input)) {
         return value.getSizeAsync(input);
+      }
+    }
+
+    throw UnsupportedError('The input is not supported.');
+  }
+
+  /// {@template image_size_getter.getSizeResult}
+  /// Get the size of the [input] and the [BaseDecoder] that decodes the [input].
+  /// {@endtemplate}
+  static SizeResult getSizeResult(ImageInput input) {
+    if (!input.exists()) {
+      throw StateError('The input is not exists.');
+    }
+
+    for (var value in _decoders) {
+      if (value.isValid(input)) {
+        return SizeResult(size: value.getSize(input), decoder: value);
+      }
+    }
+
+    throw UnsupportedError('The input is not supported.');
+  }
+
+  /// {@macro image_size_getter.getSizeResult}
+  ///
+  /// The method is async version for [getSizeResult].
+  static Future<SizeResult> getSizeResultAsync(AsyncImageInput input) async {
+    if (!await input.exists()) {
+      throw StateError('The input is not exists.');
+    }
+
+    if (!(await input.supportRangeLoad())) {
+      final delegateInput = await input.delegateInput();
+      try {
+        return ImageSizeGetter.getSizeResult(delegateInput);
+      } finally {
+        delegateInput.release();
+      }
+    }
+
+    for (var value in _decoders) {
+      if (await value.isValidAsync(input)) {
+        return SizeResult(
+          size: await value.getSizeAsync(input),
+          decoder: value,
+        );
       }
     }
 

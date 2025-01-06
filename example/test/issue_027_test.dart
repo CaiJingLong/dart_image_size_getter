@@ -34,7 +34,9 @@ void main() {
         final isJpg = MyJpegDecoder().isValid(fileInput);
         expect(isJpg, true);
 
-        print('jpg size: ${ImageSizeGetter.getSize(fileInput)}');
+        final result = ImageSizeGetter.getSizeResult(fileInput);
+        print(
+            'jpg size: ${result.size} (decoded by ${result.decoder.decoderName})');
       }
     }
   });
