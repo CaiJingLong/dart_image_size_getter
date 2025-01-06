@@ -1,8 +1,24 @@
 # image_size_getter
 
+[![pub package](https://img.shields.io/pub/v/image_size_getter.svg)](https://pub.dev/packages/image_size_getter)
+[![likes](https://img.shields.io/pub/likes/image_size_getter)](https://pub.dev/packages/image_size_getter/score)
+[![popularity](https://img.shields.io/pub/popularity/image_size_getter)](https://pub.dev/packages/image_size_getter/score)
+[![pub points](https://img.shields.io/pub/points/image_size_getter)](https://pub.dev/packages/image_size_getter/score)
+
+[![GitHub stars](https://img.shields.io/github/stars/CaiJingLong/dart_image_size_getter.svg)](https://github.com/CaiJingLong/dart_image_size_getter)
+[![GitHub forks](https://img.shields.io/github/forks/CaiJingLong/dart_image_size_getter.svg)](https://github.com/CaiJingLong/dart_image_size_getter)
+[![GitHub license](https://img.shields.io/github/license/CaiJingLong/dart_image_size_getter.svg)](https://github.com/CaiJingLong/dart_image_size_getter/blob/master/LICENSE)
+
 Do not completely decode the image file, just read the metadata to get the image width and height.
 
 Just support jpeg, gif, png, webp, bmp.
+
+## Install
+
+```yaml
+dependencies:
+  image_size_getter: ^2.3.0
+```
 
 ## Usage
 
