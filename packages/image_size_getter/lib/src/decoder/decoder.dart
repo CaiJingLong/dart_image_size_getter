@@ -131,10 +131,10 @@ mixin SimpleFileHeaderAndFooter {
 
 /// The content have multiple headers or footers.
 mixin MutilFileHeaderAndFooter {
-  /// When the [mutipleStartBytes] is true, this is the start bytes of the file.
+  /// When there are multiple start bytes, this is the list of possible start bytes of the file.
   List<List<int>> get mutipleStartBytesList;
 
-  /// When the [mutipleEndBytes] is true, this is the end bytes of the file.
+  /// When there are multiple end bytes, this is the list of possible end bytes of the file.
   List<List<int>> get mutipleEndBytesList;
 }
 

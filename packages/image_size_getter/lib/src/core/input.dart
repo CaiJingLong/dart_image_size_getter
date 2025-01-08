@@ -18,7 +18,7 @@ abstract class ImageInput {
   ///
   /// [start] and [end] are the start and end index of the range.
   ///
-  /// Such as: [start] = 0, [end] = 2, then the result is [0, 1].
+  /// Such as: [start] = 0, [end] = 2, then the result is `[0, 1]`.
   List<int> getRange(int start, int end);
 
   /// Check if the input data exists.
@@ -36,7 +36,7 @@ abstract class ImageInput {
 class HaveResourceImageInput extends ImageInput {
   /// {@macro image_size_getter.HaveResourceImageInput}
   ///
-  /// [input] is the input data of [ImageInput].
+  /// [innerInput] is the input data of [ImageInput].
   /// [onRelease] is the function to release the resources.
   ///
   const HaveResourceImageInput({
@@ -105,7 +105,7 @@ abstract class AsyncImageInput {
   ///
   /// [start] and [end] are the start and end index of the range.
   ///
-  /// Such as: [start] = 0, [end] = 2, then the result is [0, 1].
+  /// Such as: `[start]` = 0, `[end]` = 2, then the result is `[0, 1]`.
   Future<List<int>> getRange(int start, int end);
 
   /// Check if the input data exists.
