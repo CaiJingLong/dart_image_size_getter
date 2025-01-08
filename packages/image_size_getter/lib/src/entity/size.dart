@@ -2,7 +2,7 @@ import 'package:hashcodes/hashcodes.dart';
 
 import '../../image_size_getter.dart';
 
-/// {@template image_size_getter.Size}
+/// {@template image_size_getter.Size.class}
 ///
 /// [Size] is a class for image size.
 ///
@@ -14,7 +14,7 @@ import '../../image_size_getter.dart';
 ///
 /// {@macro image_size_getter.Size.needToRotate}
 class Size {
-  /// {@macro image_size_getter.Size}
+  /// {@macro image_size_getter.Size.class}
   ///
   /// ---
   ///
@@ -36,7 +36,7 @@ class Size {
   /// If the [needRotate] is true,
   /// the [width] and [height] need to be swapped when using.
   ///
-  /// Such as, orientation value of the jpeg format is [5, 6, 7, 8].
+  /// Such as, orientation value of the jpeg format is `[5, 6, 7, 8]`.
   ///
   /// {@endtemplate}
   final bool needRotate;

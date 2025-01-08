@@ -33,4 +33,4 @@ void main() {
 
 ## License
 
-[APACHE LICENSE, VERSION 2.0](LICENSE)
+[APACHE LICENSE, VERSION 2.0](https://github.com/CaiJingLong/dart_image_size_getter/blob/main/packages/image_size_getter_heic/LICENSE)

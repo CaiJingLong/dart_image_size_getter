@@ -8,3 +8,11 @@ scripts:
   test:
     exec: |
       dart test
+  dartdoc:
+    exec: |
+      dartdoc 2>&1
+    packageFilters:
+      scope:
+        - image_size_getter
+        - image_size_getter_heic
+        - image_size_getter_http_input
