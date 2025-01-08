@@ -1,6 +1,6 @@
 name: image_size_getter_heic
 description: A decoder for HEIC images with image_size_getter.
-version: 1.0.1
+version: 1.0.1+1
 homepage: https://github.com/CaiJingLong/dart_image_size_getter
 
 environment:
