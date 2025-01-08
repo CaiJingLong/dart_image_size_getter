@@ -10,7 +10,8 @@ on:
       - main
 
 jobs:
-  test-job:
+  make-dartdoc-job:
+    name: Make dartdoc for packages
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
