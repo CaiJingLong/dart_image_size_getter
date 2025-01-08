@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 2.0.1+1
+
+- Docs: Add docs for dartdoc.
+
 ## 2.0.1
 
 - Bump `http` version.
