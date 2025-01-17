@@ -109,7 +109,7 @@ A typical use case is [http_input][HttpInput].
 
 ```dart
 void checkExtension(String ext, BaseDecoder decoder) {
-  final isSupport = decoder.isSupportExtension(ext);
+  final isSupport = decoder.isExtensionSupported(ext);
   print('The decoder ${decoder.decoderName} support $ext: $isSupport');
 }
 ```

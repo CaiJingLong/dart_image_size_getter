@@ -20,7 +20,7 @@
 
 ## 2.4.0
 
-- Add `isSupportExtension` to `BaseDecoder`
+- Add `isExtensionSupported` to `BaseDecoder`
 
 ## 2.3.0+1
 
