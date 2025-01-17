@@ -13,6 +13,9 @@ class BmpDecoder extends BaseDecoder {
   String get decoderName => 'bmp';
 
   @override
+  List<String> get supportedExtensions => List.unmodifiable(['bmp']);
+
+  @override
   Size getSize(ImageInput input) {
     final widthList = input.getRange(0x12, 0x16);
     final heightList = input.getRange(0x16, 0x1a);

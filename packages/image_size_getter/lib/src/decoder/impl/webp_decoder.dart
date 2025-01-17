@@ -14,6 +14,9 @@ class WebpDecoder extends BaseDecoder {
   String get decoderName => 'webp';
 
   @override
+  List<String> get supportedExtensions => List.unmodifiable(['webp']);
+
+  @override
   Size getSize(ImageInput input) {
     final chunkHeader = input.getRange(12, 16);
     if (_isExtendedFormat(chunkHeader)) {

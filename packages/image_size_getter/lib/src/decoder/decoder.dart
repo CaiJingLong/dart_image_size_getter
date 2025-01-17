@@ -1,12 +1,11 @@
+import 'package:meta/meta.dart';
 import 'package:collection/collection.dart';
 import 'package:image_size_getter/image_size_getter.dart';
 
 /// {@template image_size_getter.BaseDecoder}
-///
 /// Base of the decoder.
 ///
 /// Implement this class to create a new decoder.
-///
 /// {@endtemplate}
 abstract class BaseDecoder {
   /// {@macro image_size_getter.BaseDecoder}
@@ -14,6 +13,31 @@ abstract class BaseDecoder {
 
   /// The name of the decoder.
   String get decoderName;
+
+  /// How many file extensions are supported with the decoder.
+  ///
+  /// The method must be overridden for each implementation.
+  ///
+  /// - See also: https://developer.mozilla.org/docs/Web/Media/Formats/Image_types
+  /// - See also: [isSupportExtension]
+  @mustBeOverridden
+  List<String> get supportedExtensions => [];
+
+  /// {@template image_size_getter.BaseDecoder.isSupportExtension}
+  ///
+  /// Returns the [extension] is support or not.
+  /// Ignore the case of letters.
+  ///
+  /// {@endtemplate}
+  bool isSupportExtension(String extension) {
+    for (final ext in supportedExtensions) {
+      // ignore the case.
+      if (ext.toLowerCase() == extension.toLowerCase()) {
+        return true;
+      }
+    }
+    return false;
+  }
 
   /// {@template image_size_getter.BaseDecoder.isValid}
   ///

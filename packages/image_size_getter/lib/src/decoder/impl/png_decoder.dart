@@ -13,6 +13,9 @@ class PngDecoder extends BaseDecoder with SimpleTypeValidator {
   String get decoderName => 'png';
 
   @override
+  List<String> get supportedExtensions => List.unmodifiable(['png']);
+
+  @override
   Size getSize(ImageInput input) {
     final widthList = input.getRange(0x10, 0x14);
     final heightList = input.getRange(0x14, 0x18);

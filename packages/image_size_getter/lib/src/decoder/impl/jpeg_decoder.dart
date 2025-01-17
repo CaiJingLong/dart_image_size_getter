@@ -14,8 +14,13 @@ class JpegDecoder extends BaseDecoder with SimpleTypeValidator {
   });
 
   final bool isStandardJpeg;
+
   @override
   String get decoderName => isStandardJpeg ? 'jpeg' : 'non-standard-jpeg';
+
+  @override
+  List<String> get supportedExtensions =>
+      List.unmodifiable(['jpg', 'jpeg', 'jfif', 'pjpeg', 'pjp']);
 
   @override
   Size getSize(ImageInput input) {
