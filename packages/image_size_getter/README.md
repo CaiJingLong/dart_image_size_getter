@@ -103,6 +103,17 @@ If your data source is read asynchronously, consider using `AsyncImageInput`.
 
 A typical use case is [http_input][HttpInput].
 
+## Check the extension for decoder
+
+> Since 2.4.0
+
+```dart
+void checkExtension(String ext, BaseDecoder decoder) {
+  final isSupport = decoder.isSupportExtension(ext);
+  print('The decoder ${decoder.decoderName} support $ext: $isSupport');
+}
+```
+
 ## Custom
 
 We can implement our own input or decoder.
