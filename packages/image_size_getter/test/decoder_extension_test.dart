@@ -5,49 +5,49 @@ void main() {
   group('Test decoder extension', () {
     test('Test gif decoder', () {
       final GifDecoder decoder = GifDecoder();
-      expect(decoder.isSupportExtension('gif'), true);
-      expect(decoder.isSupportExtension('GIF'), true);
+      expect(decoder.isExtensionSupported('gif'), true);
+      expect(decoder.isExtensionSupported('GIF'), true);
 
-      expect(decoder.isSupportExtension('jpg'), false);
-      expect(decoder.isSupportExtension('JPG'), false);
+      expect(decoder.isExtensionSupported('jpg'), false);
+      expect(decoder.isExtensionSupported('JPG'), false);
     });
 
     test('Test jpeg decoder', () {
       final JpegDecoder decoder = JpegDecoder();
-      expect(decoder.isSupportExtension('jpg'), true);
-      expect(decoder.isSupportExtension('JPG'), true);
-      expect(decoder.isSupportExtension('jpeg'), true);
-      expect(decoder.isSupportExtension('JPEG'), true);
+      expect(decoder.isExtensionSupported('jpg'), true);
+      expect(decoder.isExtensionSupported('JPG'), true);
+      expect(decoder.isExtensionSupported('jpeg'), true);
+      expect(decoder.isExtensionSupported('JPEG'), true);
 
-      expect(decoder.isSupportExtension('gif'), false);
-      expect(decoder.isSupportExtension('GIF'), false);
+      expect(decoder.isExtensionSupported('gif'), false);
+      expect(decoder.isExtensionSupported('GIF'), false);
     });
 
     test('Test png decoder', () {
       final PngDecoder decoder = PngDecoder();
-      expect(decoder.isSupportExtension('png'), true);
-      expect(decoder.isSupportExtension('PNG'), true);
+      expect(decoder.isExtensionSupported('png'), true);
+      expect(decoder.isExtensionSupported('PNG'), true);
 
-      expect(decoder.isSupportExtension('jpg'), false);
-      expect(decoder.isSupportExtension('JPG'), false);
+      expect(decoder.isExtensionSupported('jpg'), false);
+      expect(decoder.isExtensionSupported('JPG'), false);
     });
 
     test('Test webp decoder', () {
       final WebpDecoder decoder = WebpDecoder();
-      expect(decoder.isSupportExtension('webp'), true);
-      expect(decoder.isSupportExtension('WEBP'), true);
+      expect(decoder.isExtensionSupported('webp'), true);
+      expect(decoder.isExtensionSupported('WEBP'), true);
 
-      expect(decoder.isSupportExtension('jpg'), false);
-      expect(decoder.isSupportExtension('JPG'), false);
+      expect(decoder.isExtensionSupported('jpg'), false);
+      expect(decoder.isExtensionSupported('JPG'), false);
     });
 
     test('Test bmp decoder', () {
       final BmpDecoder decoder = BmpDecoder();
-      expect(decoder.isSupportExtension('bmp'), true);
-      expect(decoder.isSupportExtension('BMP'), true);
+      expect(decoder.isExtensionSupported('bmp'), true);
+      expect(decoder.isExtensionSupported('BMP'), true);
 
-      expect(decoder.isSupportExtension('jpg'), false);
-      expect(decoder.isSupportExtension('JPG'), false);
+      expect(decoder.isExtensionSupported('jpg'), false);
+      expect(decoder.isExtensionSupported('JPG'), false);
     });
   });
 }

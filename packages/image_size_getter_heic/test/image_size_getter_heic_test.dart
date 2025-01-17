@@ -18,13 +18,13 @@ void main() {
     });
 
     test('extension', () {
-      expect(decoder.isSupportExtension('heic'), equals(true));
-      expect(decoder.isSupportExtension('HEIC'), equals(true));
-      expect(decoder.isSupportExtension('heif'), equals(true));
-      expect(decoder.isSupportExtension('HEIF'), equals(true));
+      expect(decoder.isExtensionSupported('heic'), equals(true));
+      expect(decoder.isExtensionSupported('HEIC'), equals(true));
+      expect(decoder.isExtensionSupported('heif'), equals(true));
+      expect(decoder.isExtensionSupported('HEIF'), equals(true));
 
-      expect(decoder.isSupportExtension('jpg'), equals(false));
-      expect(decoder.isSupportExtension('JPG'), equals(false));
+      expect(decoder.isExtensionSupported('jpg'), equals(false));
+      expect(decoder.isExtensionSupported('JPG'), equals(false));
     });
   });
 
