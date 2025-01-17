@@ -20,6 +20,9 @@ class MyJpegDecoder extends JpegDecoder {
   bool _checkHeader(List<int> bytes) {
     return bytes[0] == 0xFF && bytes[1] == 0xD8;
   }
+
+  @override
+  List<String> get supportedExtensions => JpegDecoder().supportedExtensions;
 }
 
 void main() {

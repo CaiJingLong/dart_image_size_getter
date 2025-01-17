@@ -16,6 +16,16 @@ void main() {
       final asyncInput = AsyncImageInput.input(input);
       expect(decoder.isValidAsync(asyncInput), completion(equals(true)));
     });
+
+    test('extension', () {
+      expect(decoder.isSupportExtension('heic'), equals(true));
+      expect(decoder.isSupportExtension('HEIC'), equals(true));
+      expect(decoder.isSupportExtension('heif'), equals(true));
+      expect(decoder.isSupportExtension('HEIF'), equals(true));
+
+      expect(decoder.isSupportExtension('jpg'), equals(false));
+      expect(decoder.isSupportExtension('JPG'), equals(false));
+    });
   });
 
   group('Test get heic size', () {
