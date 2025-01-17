@@ -2,11 +2,9 @@ import 'package:collection/collection.dart';
 import 'package:image_size_getter/image_size_getter.dart';
 
 /// {@template image_size_getter.BaseDecoder}
-///
 /// Base of the decoder.
 ///
 /// Implement this class to create a new decoder.
-///
 /// {@endtemplate}
 abstract class BaseDecoder {
   /// {@macro image_size_getter.BaseDecoder}
@@ -14,6 +12,11 @@ abstract class BaseDecoder {
 
   /// The name of the decoder.
   String get decoderName;
+
+  /// How many file extensions are supported with the decoder.
+  ///
+  /// See also: https://developer.mozilla.org/docs/Web/Media/Formats/Image_types
+  List<String> get supportedExtensions;
 
   /// {@template image_size_getter.BaseDecoder.isValid}
   ///

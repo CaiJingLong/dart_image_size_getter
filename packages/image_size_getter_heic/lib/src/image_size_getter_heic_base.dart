@@ -35,6 +35,10 @@ class HeicDecoder extends BaseDecoder {
   @override
   String get decoderName => 'heic';
 
+  @override
+  List<String> get supportedExtensions =>
+      List.unmodifiable(['heic', 'heics', 'heif', 'heifs']);
+
   /// Extracts the size information from a HEIC image synchronously.
   ///
   /// This method parses the BMFF structure of the HEIC file to find the 'ispe' box
